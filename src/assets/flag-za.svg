@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="66" height="46" viewBox="0 0 66 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="flag/ZA">
+<g clip-path="url(#clip0_0_285)">
+<path id="Vector" d="M3 3.00047H63V42.9996H3V3.00047Z" fill="white"/>
+<path id="Vector_2" d="M16.3622 23.0002L3 9.632V36.3707L16.3622 23.0002Z" fill="black"/>
+<path id="Vector_3" d="M21.8897 23.0001L3 4.0977V9.632L16.3622 23.0002L3 36.3707V41.8947L21.8897 23.0001Z" fill="#FFB915"/>
+<path id="Vector_4" d="M62.7461 26.9131C62.7529 26.8615 62.8403 26.8102 63 26.7586V19.087H29.0862L12.9996 3.00047H3V4.0977L21.8897 23.0001L3 41.8947V42.9996H12.9996L29.0862 26.9131H62.7461V26.9131Z" fill="#007847"/>
+<path id="Vector_5" d="M61.9665 30.8262H30.707L18.5334 42.9996H63V30.8262H61.9665Z" fill="#000C8A"/>
+<path id="Vector_6" d="M61.9665 15.1739H63V3.00047H18.5334L30.707 15.1739H61.9665Z" fill="#E1392D"/>
+</g>
+<rect x="1.5" y="1.5" width="63" height="43" rx="3.5" stroke="white" stroke-width="3"/>
+</g>
+<defs>
+<clipPath id="clip0_0_285">
+<rect x="3" y="3" width="60" height="40" rx="2" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="66" height="46" viewBox="0 0 66 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="flag/SI">
+<g clip-path="url(#clip0_0_357)">
+<path id="Vector" d="M3 3.00056H63V42.9997H3V3.00056Z" fill="white"/>
+<path id="Vector_2" d="M3 16.3335H63V29.6665H3V16.3335Z" fill="#0052B4"/>
+<path id="Vector_3" d="M3 29.6666H63V42.9996H3V29.6666Z" fill="#D80027"/>
+<path id="Vector_4" d="M30.3757 16.0437V17.7824C30.3757 21.7763 25.1583 22.9998 25.1583 22.9998C25.1583 22.9998 19.9409 21.7764 19.9409 17.7824V16.0437L19.9239 10.8654L30.3586 10.8342L30.3757 16.0437V16.0437Z" fill="white"/>
+<path id="Vector_5" d="M30.3757 16.0437V17.7824C30.3757 21.7763 25.1583 22.9998 25.1583 22.9998C25.1583 22.9998 19.9409 21.7764 19.9409 17.7824V16.0437L19.9239 10.8654L30.3586 10.8342L30.3757 16.0437V16.0437Z" fill="#0052B4"/>
+<path id="Vector_6" d="M30.3757 16.0437V17.7824C30.3757 21.7763 25.1583 22.9998 25.1583 22.9998C25.1583 22.9998 19.9409 21.7764 19.9409 17.7824V16.0437L21.6809 17.7824L25.1583 15.1737L28.637 17.7824L30.3757 16.0437V16.0437Z" fill="white"/>
+</g>
+<rect x="1.5" y="1.5" width="63" height="43" rx="3.5" stroke="white" stroke-width="3"/>
+</g>
+<defs>
+<clipPath id="clip0_0_357">
+<rect x="3" y="3" width="60" height="40" rx="2" fill="white"/>
+</clipPath>
+</defs>
+</svg>

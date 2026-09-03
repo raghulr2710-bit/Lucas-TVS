@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="68" height="48" viewBox="0 0 68 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="flag/JP">
+<g clip-path="url(#clip0_0_275)">
+<path id="Vector" d="M4 3.99977H64V44.0002H4V3.99977Z" fill="white"/>
+<path id="Vector_2" d="M34 35.2494C40.2132 35.2494 45.25 30.2126 45.25 23.9994C45.25 17.7861 40.2132 12.7493 34 12.7493C27.7868 12.7493 22.75 17.7861 22.75 23.9994C22.75 30.2126 27.7868 35.2494 34 35.2494Z" fill="#D80027"/>
+</g>
+<rect x="2" y="2" width="64" height="44" rx="4" stroke="white" stroke-width="4"/>
+</g>
+<defs>
+<clipPath id="clip0_0_275">
+<rect x="4" y="4" width="60" height="40" rx="2" fill="white"/>
+</clipPath>
+</defs>
+</svg>
