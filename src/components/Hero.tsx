@@ -104,31 +104,33 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Customer proof ------------------------------------------------ */}
-      <div className="shell">
-        <div className="border-t border-line/70 pt-6" />
-      </div>
+      {/* Customer proof — hidden for now, keep for later re-enable */}
+      <div className="hidden">
+        <div className="shell">
+          <div className="border-t border-line/70 pt-6" />
+        </div>
 
-      <div className="pb-10">
-        <p className="mb-6 text-center font-body text-[13px] font-medium text-black">
-          Trusted by the World&rsquo;s Most Demanding Automotive Manufacturers
-        </p>
+        <div className="pb-10">
+          <p className="mb-6 text-center font-body text-[13px] font-medium text-black">
+            Trusted by the World&rsquo;s Most Demanding Automotive Manufacturers
+          </p>
 
-        <Marquee speed="slow">
-          {CUSTOMERS.map((logo) => (
-            <div
-              key={logo.name}
-              className="flex w-[132px] shrink-0 items-center justify-center px-4 lg:w-[158px] lg:px-6"
-            >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                style={{ height: logo.h }}
-                className="w-auto max-w-full object-contain"
-              />
-            </div>
-          ))}
-        </Marquee>
+          <Marquee speed="slow">
+            {CUSTOMERS.map((logo) => (
+              <div
+                key={logo.name}
+                className="flex w-[132px] shrink-0 items-center justify-center px-4 lg:w-[158px] lg:px-6"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  style={{ height: logo.h }}
+                  className="w-auto max-w-full object-contain"
+                />
+              </div>
+            ))}
+          </Marquee>
+        </div>
       </div>
     </section>
   )
