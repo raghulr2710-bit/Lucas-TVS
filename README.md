@@ -152,3 +152,4 @@ them; `src/lib/assets.ts` maps each one to a role-based name.
 
 `design-refs/` holds the original source imagery that predates this build; it
 is not referenced by the app.
+ 
