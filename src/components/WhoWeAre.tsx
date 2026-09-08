@@ -2,10 +2,10 @@ import { Button } from './primitives'
 import { facilityAerial } from '../lib/assets'
 
 const STATS = [
-  { value: '60+', label: 'Years of engineering' },
-  { value: '300+', label: 'Software & product engineers' },
-  { value: '7', label: 'Manufacturing plants' },
-  { value: '40M+', label: 'Products shipped annually' },
+  { value: '3', label: 'Sectors served' },
+  { value: '5', label: 'Focus areas' },
+  { value: '8', label: 'Engineering service lines' },
+  { value: '∞', label: 'Concept → SOP lifecycle' },
 ]
 
 export function WhoWeAre() {
@@ -24,11 +24,12 @@ export function WhoWeAre() {
             Who we are
           </p>
           <h2 className="mt-4 max-w-[514px] font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:mt-6 lg:text-[40px]">
-            Engineering the Future of Intelligent Mobility.
+            Products, Systems &amp; Engineering Services
           </h2>
           <p className="mt-4 max-w-[532px] font-body text-[15px] leading-[1.5] text-body lg:mt-5 lg:text-[16px]">
-            Advanced software, embedded systems, power electronics and product
-            engineering solutions for global OEMs and EV innovators.
+            We deliver end-to-end engineering, software and digital solutions
+            that help customers build intelligent products, advanced
+            electronics, connected platforms and mission-critical systems.
           </p>
         </div>
 

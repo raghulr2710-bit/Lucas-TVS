@@ -3,40 +3,27 @@ import { logoLucasTvsFooter } from '../lib/assets'
 
 const COLUMNS = [
   {
+    heading: 'Industries',
+    links: ['Automotive', 'Industrial', 'Defence & Aerospace'],
+  },
+  {
     heading: 'Company',
-    links: ['About', 'Quality & Standards', 'Global Presence', 'Careers', 'Contact'],
+    links: ['About', 'Careers', 'Contact'],
   },
   {
-    heading: 'Products',
+    heading: 'Services',
     links: [
-      'Traction Motors',
-      'Motor Controllers',
-      'Battery Management',
-      'DC-DC Converters',
-      'On-board Chargers',
-      'Control Units',
-    ],
-  },
-  {
-    heading: 'Capabilities',
-    links: [
-      'Hardware Engineering',
-      'Embedded Software',
-      'Functional Safety',
-      'Validation & Testing',
-      'Electronics Design',
-      'Manufacturing',
+      'Product Engineering',
+      'Embedded Systems',
+      'Electronics Engineering',
+      'Software Engineering',
+      'Functional Safety & Cybersecurity',
+      'Digital Engineering',
     ],
   },
   {
     heading: 'Resources',
-    links: [
-      'Insights',
-      'Whitepapers',
-      'Case Studies',
-      'Locations',
-      'Supplier enquiries',
-    ],
+    links: ['Insights & Events', 'Whitepapers', 'Case Studies'],
   },
 ]
 
@@ -55,8 +42,7 @@ export function SiteFooter() {
               className="h-[54px] w-auto lg:h-[67px]"
             />
             <p className="mt-6 font-sans text-[15px] leading-[1.38] text-body-soft lg:mt-[32px] lg:text-[16px]">
-              Auto-electricals, embedded software and electrified powertrain
-              systems, engineered and manufactured in India since 1962.
+              A software &amp; product-engineering division of Lucas-TVS.
             </p>
           </div>
 
@@ -67,7 +53,7 @@ export function SiteFooter() {
                   Engineering enquiries
                 </p>
                 <p className="mt-3 max-w-[338px] font-sans text-[15px] leading-[1.38] text-body-soft lg:text-[16px]">
-                  Tell us about your programme and we will route you to the
+                  Tell us about your programme and we&rsquo;ll route you to the
                   right team.
                 </p>
               </div>

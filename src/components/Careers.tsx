@@ -18,13 +18,13 @@ export function Careers() {
           </p>
 
           <h2 className="mx-auto mt-6 max-w-[817px] font-display text-[28px] leading-[1.15] font-medium text-white sm:text-[34px] lg:text-[40px]">
-            Build the systems that move a billion people.
+            Solve hard engineering problems. Build what&rsquo;s next.
           </h2>
 
           <p className="mx-auto mt-4 max-w-[661px] font-body text-[15px] leading-[1.5] text-white lg:text-[16px]">
-            Engineering roles across embedded software, power electronics,
-            validation and manufacturing, based in India and supporting
-            programmes worldwide.
+            Join a young software &amp; product-engineering division inside
+            Lucas-TVS — electrification, SDV, embedded systems, defence
+            electronics and AI.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-[17px] lg:mt-[44px]">

@@ -1,38 +1,64 @@
+import {
+  Boxes,
+  Cpu,
+  CircuitBoard,
+  Code2,
+  ShieldCheck,
+  Gauge,
+  BrainCircuit,
+  ClipboardCheck,
+  type LucideIcon,
+} from 'lucide-react'
 import { Button, ChevronPill, Eyebrow } from './primitives'
 import { ScrollConvergeGroup, ScrollConvergeItem } from '@/components/ui/scroll-converge'
 import { cx } from '../lib/cx'
-import {
-  rndFeature,
-  iconProductEngineering,
-  iconPrototype,
-  iconSmartManufacturing,
-  iconFutureTech,
-} from '../lib/assets'
+import { rndFeature } from '../lib/assets'
 
-const CAPABILITIES = [
+const CAPABILITIES: { title: string; blurb: string; icon: LucideIcon }[] = [
   {
     title: 'Product Engineering',
     blurb: 'Concept to deployment and lifecycle management.',
-    icon: iconProductEngineering,
+    icon: Boxes,
   },
   {
     title: 'Embedded Systems',
     blurb: 'Intelligent embedded platforms for connected products.',
-    icon: iconPrototype,
+    icon: Cpu,
+  },
+  {
+    title: 'Electronics Engineering',
+    blurb: 'Hardware for next-generation products.',
+    icon: CircuitBoard,
   },
   {
     title: 'Software Engineering',
     blurb: 'Scalable software platforms and applications.',
-    icon: iconSmartManufacturing,
+    icon: Code2,
   },
   {
     title: 'Functional Safety & Cybersecurity',
-    blurb: 'ISO 26262, IEC 61508, ISO 21434 — safe & secure by design.',
-    icon: iconFutureTech,
+    blurb: 'ISO 26262 · IEC 61508 · ISO 21434 — safe & secure by design.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Electronics & Controls',
+    blurb: 'Motor control, power electronics, HW-SW co-development.',
+    icon: Gauge,
+  },
+  {
+    title: 'Digital Engineering',
+    blurb: 'AI/ML, IIoT, cloud & edge, predictive maintenance.',
+    icon: BrainCircuit,
+  },
+  {
+    title: 'Verification & Testing',
+    blurb: 'MIL/SIL/HIL, automation, compliance & certification.',
+    icon: ClipboardCheck,
   },
 ]
 
-export function ResearchDevelopment() {
+/** Home2-only: expanded 8-service version of ResearchDevelopment with a sticky feature card. */
+export function EngineeringServices() {
   return (
     <section
       id="quality"
@@ -72,12 +98,12 @@ export function ResearchDevelopment() {
                 index={i}
                 className={cx(i % 2 === 1 && 'lg:translate-y-[49px]')}
               >
-                <article className="relative flex h-full min-h-[274px] flex-col rounded-[19.75px] border border-[#d8d8d8] bg-white p-[17px]">
-                  <span className="grid h-[63px] w-[64px] place-items-center rounded-[5px] border border-[#f0f0f0] bg-lime-tint">
-                    <img
-                      src={item.icon}
-                      alt=""
-                      className="h-[45px] w-[46px] object-contain"
+                <article className="group relative flex h-full min-h-[274px] flex-col rounded-[19.75px] border border-[#d8d8d8] bg-white p-[17px] transition-all duration-300 hover:-translate-y-1.5 hover:border-lime hover:shadow-[0_16px_36px_rgba(0,0,0,0.10)]">
+                  <span className="grid h-[63px] w-[64px] place-items-center rounded-[5px] border border-[#f0f0f0] bg-lime-tint transition-colors duration-300 group-hover:border-lime group-hover:bg-lime">
+                    <item.icon
+                      aria-hidden
+                      strokeWidth={1.6}
+                      className="h-[30px] w-[30px] text-ink"
                     />
                   </span>
 
@@ -89,7 +115,7 @@ export function ResearchDevelopment() {
                   </p>
 
                   <ChevronPill
-                    className="mt-auto ml-auto !h-[36px] !w-[73px] self-end shadow-[0_2.9px_2.9px_0_rgba(211,211,211,0.25),inset_0_0_2.9px_0_rgba(0,0,0,0.25)]"
+                    className="mt-auto ml-auto !h-[36px] !w-[73px] self-end shadow-[0_2.9px_2.9px_0_rgba(211,211,211,0.25),inset_0_0_2.9px_0_rgba(0,0,0,0.25)] transition-transform duration-300 group-hover:translate-x-1"
                     iconClassName="h-[18px] w-[18px]"
                     label={`Read more about ${item.title}`}
                   />
@@ -98,8 +124,8 @@ export function ResearchDevelopment() {
             ))}
           </ScrollConvergeGroup>
 
-          {/* Feature card -------------------------------------------- */}
-          <article className="relative mt-8 aspect-[507/615] overflow-hidden rounded-[18px] lg:mt-0 lg:w-[507px] lg:shrink-0">
+          {/* Feature card — sticks in view while the taller list scrolls past */}
+          <article className="relative mt-8 aspect-[507/615] overflow-hidden rounded-[18px] lg:sticky lg:top-24 lg:mt-0 lg:w-[507px] lg:shrink-0 lg:self-start">
             <img
               src={rndFeature}
               alt="Engineer monitoring an automated motor assembly cell"

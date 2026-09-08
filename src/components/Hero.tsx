@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useReducedMotion } from 'framer-motion'
-import { Marquee } from './primitives'
+import { Button, Marquee } from './primitives'
 import { playWhenReady, useVideoScrub } from '../lib/useVideoScrub'
 import { useHasFinePointer } from '../lib/useHasFinePointer'
 import {
@@ -92,14 +92,19 @@ export function Hero() {
         <div className="shell relative flex h-full flex-col justify-center pt-24 lg:block lg:pt-[130px]">
           <div className="flex flex-col">
             <p className="order-2 mt-6 max-w-[461px] lg:order-1 font-body text-[15px] leading-[1.5] font-medium text-black lg:mt-0 lg:ml-auto">
-              Advanced software, embedded systems, power electronics and product
-              engineering solutions for global OEMs and EV innovators.
+              End-to-end engineering, software and digital solutions across
+              Automotive, Industrial and Defence &amp; Aerospace — concept to
+              lifecycle.
             </p>
 
             <h1 className="order-1 max-w-[575px] lg:order-2 font-display text-[44px] leading-[1.08] font-semibold text-black sm:text-[60px] lg:mt-[42px] lg:text-[80px]">
               Engineering the{' '}
               <span className="text-green-deep">Future</span>
             </h1>
+
+            <Button className="order-3 mt-6 self-start lg:mt-10 lg:ml-auto">
+              Talk to Engineering
+            </Button>
           </div>
         </div>
       </div>

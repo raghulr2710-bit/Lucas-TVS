@@ -12,42 +12,37 @@ import {
 
 const ITEMS = [
   {
-    label: 'Innovation',
-    title: 'Engineering Tomorrow, Today.',
-    description:
-      'Pushing boundaries through continuous research and forward-thinking solutions.',
+    label: 'End-to-End Lifecycle Support',
+    title: 'End-to-End Lifecycle Support',
+    description: 'From concept to validation, deployment and support.',
     image: whyFeature,
     alt: 'Digital twin of an electric vehicle in an engineering bay',
   },
   {
-    label: 'Quality First',
-    title: 'Quality First',
-    description:
-      'Precision engineering and rigorous validation built into every product we ship.',
+    label: 'Deep Domain Expertise',
+    title: 'Deep Domain Expertise',
+    description: 'Automotive, Industrial and Defence engineering experience.',
     image: whyQualityFirst,
     alt: 'Close-up of a circuit board under green lighting',
   },
   {
-    label: 'Engineering Excellence',
-    title: 'Engineering Excellence',
-    description:
-      'Deep technical expertise across hardware, software, and systems integration.',
+    label: 'Product + Engineering DNA',
+    title: 'Product + Engineering DNA',
+    description: 'Product heritage combined with advanced engineering.',
     image: whyEngineeringExcellence,
     alt: 'Robotic arm on an automated production line',
   },
   {
-    label: 'Global Perspective',
-    title: 'Global Perspective',
-    description:
-      'Solving mobility challenges for customers across every major market.',
+    label: 'HW+SW Integration',
+    title: 'Hardware + Software Integration',
+    description: 'Electronics, embedded, cloud and AI under one roof.',
     image: whyGlobalPerspective,
     alt: 'Illuminated globe representing worldwide operations',
   },
   {
-    label: 'Sustainable Mobility',
-    title: 'Sustainable Mobility',
-    description:
-      'Engineering cleaner, more efficient power for the next generation of vehicles.',
+    label: 'Future-Ready Technologies',
+    title: 'Future-Ready Technologies',
+    description: 'Electrification, SDV, IIoT, AI and digital engineering.',
     image: whySustainableMobility,
     alt: 'Wind turbines on a forested ridge at sunset',
   },
@@ -99,17 +94,18 @@ export function WhyChooseUs() {
     <section className="shell pt-16 pb-4 lg:pt-24 lg:pb-8">
       <header className="gap-12 lg:flex lg:items-start lg:justify-between">
         <div className="lg:max-w-[590px]">
-          <Eyebrow className="!text-[18px]">Why Chose us</Eyebrow>
+          <Eyebrow className="!text-[18px]">Why Choose us</Eyebrow>
           <h2 className="mt-3 font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:text-[40px]">
-            Driving Future Mobility Through Innovation
+            Engineering Services That Power Every Stage
           </h2>
         </div>
 
         <div className="mt-6 lg:mt-2 lg:max-w-[660px] lg:flex-1">
           <p className="font-body text-[15px] leading-[1.5] text-body lg:text-[16px]">
-            Our Research &amp; Development ecosystem combines engineering
-            expertise, advanced testing, and intelligent product design to
-            create next-generation mobility solutions.
+            From concept and architecture to development, validation,
+            deployment, and lifecycle support, we deliver end-to-end
+            engineering services across electrification, software-defined
+            platforms.
           </p>
           <Button className="mt-6">Explore More</Button>
         </div>

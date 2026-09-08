@@ -39,6 +39,11 @@ import industryPassenger from '../assets/rectangle8.webp'
 import industryCommercial from '../assets/rectangle12.webp'
 import industryIndustrial from '../assets/rectangle14.webp'
 
+// Industries we serve — three sectors -----------------------------------
+import sectorAutomotive from '../assets/1sectors.png'
+import sectorIndustrial from '../assets/2sectors.png'
+import sectorDefenceAerospace from '../assets/3sectors.png'
+
 // Solution showcase (drones) ------------------------------------------
 import solutionShowcase from '../assets/background.webp'
 import tabEv from '../assets/chat-gpt-image-aug62026084046-pm1.webp'
@@ -46,6 +51,15 @@ import tabEnvironment from '../assets/chat-gpt-image-aug62026084425-pm1.webp'
 import tabAutomotive from '../assets/chat-gpt-image-aug62026084659-pm1.webp'
 import tabIndustrial from '../assets/chat-gpt-image-aug62026085012-pm1.webp'
 import tabConsumer from '../assets/chat-gpt-image-aug62026085929-pm1.webp'
+
+// Focus areas — Electrification & Powertrain (Home2 only) --------------
+import focusAreasElectrificationPowertrain from '../assets/focus-areas-electrification-powertrain.png'
+
+// Our Engineering Approach (Home2 only) ---------------------------------
+import approachBackdrop from '../assets/approach.png'
+
+// One Integrated Engineering Stack (Home2 only) -------------------------
+import integratedStack from '../assets/software.png'
 
 // Research & development ----------------------------------------------
 import rndFeature from '../assets/rectangle23.webp'
@@ -114,12 +128,18 @@ export {
   industryPassenger,
   industryCommercial,
   industryIndustrial,
+  sectorAutomotive,
+  sectorIndustrial,
+  sectorDefenceAerospace,
   solutionShowcase,
   tabEv,
   tabEnvironment,
   tabAutomotive,
   tabIndustrial,
   tabConsumer,
+  focusAreasElectrificationPowertrain,
+  approachBackdrop,
+  integratedStack,
   rndFeature,
   iconProductEngineering,
   iconPrototype,

@@ -3,16 +3,15 @@ import { insightFeature, insightTruck, insightCar } from '../lib/assets'
 
 const ARTICLES = [
   {
-    title: 'High- Efficiency Motors for a New Era of Mobility..',
-    blurb:
-      'Our Research & Development ecosystem combines engineering expertise, advanced testing, and intelligent.....',
+    title: 'Software & Product Engineering division launched',
+    blurb: 'Lucas-TVS launches its Software & Product Engineering division.',
     image: insightTruck,
     alt: 'Commercial truck on a highway at dusk',
   },
   {
-    title: 'Reliability Tested performance proven',
+    title: 'Defence modernization programs',
     blurb:
-      'Our Research & Development ecosystem combines engineering expertise, advanced testing, and intelligent.....',
+      'Supporting defence modernization & localization programs.',
     image: insightCar,
     alt: 'Passenger car parked on a tree-lined city street',
   },
@@ -23,17 +22,16 @@ export function Insights() {
     <section id="insights" className="shell pb-16 lg:pb-24">
       <header className="gap-12 lg:flex lg:items-start lg:justify-between">
         <div className="lg:max-w-[500px]">
-          <Eyebrow>Insights</Eyebrow>
+          <Eyebrow>Insights &amp; Events</Eyebrow>
           <h2 className="mt-3 font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:text-[40px]">
-            What&rsquo;s Happening at Lucas-TVS
+            Insights That Shape the Future of Mobility
           </h2>
         </div>
 
         <div className="mt-6 lg:mt-0 lg:max-w-[625px] lg:flex-1">
           <p className="font-body text-[15px] leading-[1.5] text-body lg:text-[16px]">
-            Stay updated with the latest developments in technology, product
-            innovation, industry participation, company milestones, and events
-            from Lucas-TVS.
+            Stay updated with the latest developments in engineering, software
+            and defence technologies.
           </p>
           <Button className="mt-6">All insights</Button>
         </div>
@@ -58,11 +56,12 @@ export function Insights() {
           <div className="absolute inset-x-0 bottom-0 p-[10px]">
             <div className="rounded-[15px] p-[28px]">
               <h3 className="max-w-[512px] font-display text-[26px] leading-[1.15] font-medium text-white lg:text-[35px]">
-                High- Efficiency Motors for a New Era of Mobility..
+                Lucas-TVS invests in BAT, Germany
               </h3>
               <p className="mt-4 max-w-[493px] font-body text-[15px] leading-[1.5] text-white lg:text-[16px]">
-                Our Research &amp; Development ecosystem combines engineering
-                expertise, advanced testing, and intelligent.....
+                Lucas-TVS invests in Bavarian Automotive Technologies (BAT),
+                Germany — strengthening e-mobility and power electronics
+                capabilities.
               </p>
             </div>
           </div>

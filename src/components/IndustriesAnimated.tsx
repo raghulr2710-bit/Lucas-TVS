@@ -1,35 +1,31 @@
 import CircularSplitRoll from '@/components/ui/circular-split-roll'
 import {
-  industryTwoThreeWheeler,
-  industryPassenger,
-  industryCommercial,
-  industryIndustrial,
+  sectorAutomotive,
+  sectorIndustrial,
+  sectorDefenceAerospace,
 } from '../lib/assets'
 
 const INDUSTRIES = [
   {
-    title: 'Two & Three-Wheelers',
-    description: 'High-volume platforms tuned for efficiency and cost.',
-    image: industryTwoThreeWheeler,
-    alt: 'Electric three-wheeler auto-rickshaw on a city street',
+    title: 'Automotive',
+    description:
+      'Accelerating the transition to connected, electric, autonomous and software-defined mobility.',
+    image: sectorAutomotive,
+    alt: 'Electric SUV driving on a highway with a city skyline behind it',
   },
   {
-    title: 'Passenger Vehicles',
-    description: 'Full-featured control and safety architectures.',
-    image: industryPassenger,
-    alt: 'Passenger car on an urban road',
+    title: 'Industrial',
+    description:
+      'Enabling intelligent manufacturing, automation, digitalization and connected industrial ecosystems.',
+    image: sectorIndustrial,
+    alt: 'Robotic arm welding on an automated factory production line',
   },
   {
-    title: 'Commercial & Off-Highway',
-    description: 'Durability-first design for heavy-duty cycles.',
-    image: industryCommercial,
-    alt: 'Heavy-duty commercial truck at dusk',
-  },
-  {
-    title: 'Industrial Power Systems',
-    description: 'Stationary and industrial power conversion.',
-    image: industryIndustrial,
-    alt: 'Wind turbines beside industrial battery storage containers',
+    title: 'Defence & Aerospace',
+    description:
+      'Supporting mission-critical programs through advanced engineering, embedded systems, electronics and digital technologies.',
+    image: sectorDefenceAerospace,
+    alt: 'Fighter jet flying past a mobile radar system at sunset',
   },
 ]
 
@@ -47,12 +43,11 @@ const HEADER = (
     <div className="shell relative">
       <header className="mx-auto max-w-[973px] text-center">
         <h2 className="font-display text-[24px] leading-[1.15] font-medium text-ink sm:text-[30px] lg:text-[38px]">
-          Built for How Each Segment Actually Operates.
+          One Engineering Core, Three Sectors.
         </h2>
         <p className="mx-auto mt-3 max-w-[955px] font-body text-[14px] leading-[1.5] text-body lg:text-[15px]">
-          From urban mobility to heavy-duty operations, our solutions are
-          engineered to deliver performance, reliability, and efficiency
-          across every application.
+          Automotive, Industrial and Defence &amp; Aerospace — end-to-end
+          engineering, software and digital solutions across every domain.
         </p>
       </header>
     </div>

@@ -73,6 +73,8 @@ export interface CircularSplitRollItem {
   description?: string;
   image?: string;
   alt?: string;
+  /** Skip the caption drawn over/under the image — use when the image already bakes its own title & description in. */
+  hideCaption?: boolean;
 }
 
 interface CircularSplitRollCompProps {
@@ -188,6 +190,7 @@ function CircularSplitRollComp({
       description: item.description ?? "",
       image: item.image ?? "",
       alt: item.alt ?? item.title ?? `Item ${index + 1}`,
+      hideCaption: item.hideCaption ?? false,
     }));
   }, [items]);
 
@@ -460,16 +463,18 @@ function CircularSplitRollComp({
                       </svg>
                     </span>
 
-                    <div className="absolute inset-x-2 bottom-2 rounded-[10px] bg-black/25 px-3 py-2.5 backdrop-blur-md">
-                      <h4 className="text-[13px] leading-[1.2] font-medium text-white">
-                        {item.title}
-                      </h4>
-                      {item.description && (
-                        <p className="mt-1 text-[11px] leading-[1.35] text-white/80">
-                          {item.description}
-                        </p>
-                      )}
-                    </div>
+                    {!item.hideCaption && (
+                      <div className="absolute inset-x-2 bottom-2 rounded-[10px] bg-black/25 px-3 py-2.5 backdrop-blur-md">
+                        <h4 className="text-[13px] leading-[1.2] font-medium text-white">
+                          {item.title}
+                        </h4>
+                        {item.description && (
+                          <p className="mt-1 text-[11px] leading-[1.35] text-white/80">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -504,16 +509,20 @@ function CircularSplitRollComp({
                 />
               </div>
 
-              <h3
-                className={`mt-3 text-center text-[clamp(18px,4vw,30px)] font-medium leading-none tracking-[-0.04em] text-foreground max-md:mt-2 max-md:text-[clamp(16px,5vw,24px)] ${gridTitleClassName}`}
-              >
-                {item.title}
-              </h3>
-              {item.description ? (
-                <p className="mt-2 text-center text-[14px] leading-[1.5] opacity-70">
-                  {item.description}
-                </p>
-              ) : null}
+              {!item.hideCaption && (
+                <>
+                  <h3
+                    className={`mt-3 text-center text-[clamp(18px,4vw,30px)] font-medium leading-none tracking-[-0.04em] text-foreground max-md:mt-2 max-md:text-[clamp(16px,5vw,24px)] ${gridTitleClassName}`}
+                  >
+                    {item.title}
+                  </h3>
+                  {item.description ? (
+                    <p className="mt-2 text-center text-[14px] leading-[1.5] opacity-70">
+                      {item.description}
+                    </p>
+                  ) : null}
+                </>
+              )}
             </article>
           ))}
         </div>
