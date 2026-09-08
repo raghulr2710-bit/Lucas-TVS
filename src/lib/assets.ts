@@ -76,11 +76,11 @@ import awardDeming from '../assets/image35.webp'
 import awardAcma from '../assets/image36.webp'
 
 // Why choose us --------------------------------------------------------
-import whyFeature from '../assets/rectangle9995.webp'
-import whyQualityFirst from '../assets/rectangle9996.webp'
-import whyEngineeringExcellence from '../assets/rectangle9997.webp'
-import whyGlobalPerspective from '../assets/rectangle9998.webp'
-import whySustainableMobility from '../assets/rectangle9999.webp'
+import whyFeature from '../assets/Rectangle 10016.png'
+import whyQualityFirst from '../assets/Rectangle 10012.png'
+import whyEngineeringExcellence from '../assets/Rectangle 10013.png'
+import whyGlobalPerspective from '../assets/Rectangle 10014.png'
+import whySustainableMobility from '../assets/Rectangle 10015.png'
 
 // Sustainability & careers --------------------------------------------
 import windFarm from '../assets/rectangle10002.webp'

@@ -38,9 +38,12 @@ const CAPABILITIES = [
 
 export function ResearchDevelopment() {
   return (
-    <section id="quality" className="shell pb-16 lg:pb-24">
-      <div className="rounded-[15px] bg-gradient-to-b from-white to-[#eee] px-4 py-12 sm:px-8 lg:px-[16px] lg:py-[110px]">
-        <header className="gap-12 px-1 lg:flex lg:items-start lg:justify-between lg:px-[32px]">
+    <section
+      id="quality"
+      className="relative bg-gradient-to-b from-white to-[#eee] pt-12 pb-16 lg:pt-[110px] lg:pb-24"
+    >
+      <div className="shell relative">
+        <header className="gap-12 lg:flex lg:items-start lg:justify-between">
           <div className="lg:max-w-[590px]">
             <Eyebrow className="!text-[18px]">Research &amp; Development</Eyebrow>
             <h2 className="mt-3 font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:text-[40px]">

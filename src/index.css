@@ -52,6 +52,18 @@
   }
 }
 
+@property --border-glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-glow-spin {
+  to {
+    --border-glow-angle: 360deg;
+  }
+}
+
 @layer base {
   /* Smooth scrolling is handled by Lenis in App.tsx. */
 
@@ -102,6 +114,42 @@
     .shell-wide {
       padding-inline: 0.75rem;
     }
+  }
+
+  /*
+   * Rotating gradient border glow — a lime comet chasing the pill's edge.
+   * The ring shape comes from masking the pseudo-element down to just its
+   * padding band (mask-composite: exclude), so the conic-gradient never
+   * shows as a filled rectangle behind the badge.
+   */
+  .badge-glow {
+    position: relative;
+  }
+
+  .badge-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--border-glow-angle),
+      transparent 0deg,
+      transparent 270deg,
+      var(--color-lime) 320deg,
+      #ffffff 345deg,
+      var(--color-lime) 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: border-glow-spin 3s linear infinite;
+    pointer-events: none;
   }
 
   /* Oversized watermark headings ("INDUSTRIES WE SERVE", "Global Presence"). */

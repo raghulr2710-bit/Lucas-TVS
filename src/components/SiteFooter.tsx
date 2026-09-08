@@ -44,8 +44,8 @@ const LEGAL = ['LinkedIn', 'YouTube', 'X', 'Privacy', 'Terms']
 
 export function SiteFooter() {
   return (
-    <footer className="shell-wide pb-10">
-      <div className="relative overflow-hidden rounded-[15px] border-2 border-line bg-white px-6 pt-8 pb-6 lg:px-[36px] lg:pt-[26px]">
+    <footer className="relative overflow-hidden border-t-2 border-line bg-white pt-8 pb-10 lg:pt-[26px]">
+      <div className="shell relative">
         {/* Masthead --------------------------------------------------- */}
         <div className="gap-8 lg:flex lg:items-start lg:justify-between">
           <div className="lg:max-w-[542px]">

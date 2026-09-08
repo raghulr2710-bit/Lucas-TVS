@@ -53,7 +53,7 @@ export function SolutionShowcase() {
 
       {/* Solution tabs -------------------------------------------------- */}
       <div className="-mt-[15px] px-0">
-        <ul className="relative z-10 flex snap-x snap-mandatory items-stretch justify-between gap-1 overflow-x-auto rounded-[14px] bg-white p-[3px] shadow-[0_8px_24px_rgba(0,0,0,0.10)]">
+        <ul className="relative z-10 flex snap-x snap-mandatory items-stretch justify-between gap-1 overflow-x-auto rounded-[14px] bg-white p-[3px] shadow-[0_8px_24px_rgba(0,0,0,0.10)] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map((tab) => (
             <li key={tab.id} className="shrink-0 snap-start">
               <button

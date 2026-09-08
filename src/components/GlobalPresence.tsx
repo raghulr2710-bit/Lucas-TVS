@@ -41,7 +41,7 @@ export function GlobalPresence() {
     <section id="global" className="relative overflow-hidden pt-10 pb-16 lg:pt-[108px] lg:pb-24">
       <p
         aria-hidden
-        className="watermark pointer-events-none absolute inset-x-0 top-0 text-center font-display text-[8vw] leading-none font-bold whitespace-nowrap select-none lg:text-[100px]"
+        className="watermark pointer-events-none absolute inset-x-0 top-6 text-center font-display text-[8vw] leading-none font-bold whitespace-nowrap select-none lg:top-10 lg:text-[100px]"
       >
         Global Presence
       </p>
