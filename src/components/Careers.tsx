@@ -5,10 +5,10 @@ export function Careers() {
   return (
     <section id="careers" className="shell pb-16 lg:pb-24">
       <div className="relative overflow-hidden rounded-[20px]">
-        <img
-          src={careersBackdrop}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-fixed bg-cover bg-center"
+          style={{ backgroundImage: `url(${careersBackdrop})` }}
         />
         <div className="absolute inset-0 bg-black/55" />
 

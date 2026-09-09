@@ -52,14 +52,14 @@ const STEPS: { no: string; title: string; description: string; icon: LucideIcon 
 /** Home2-only. */
 export function OurApproach() {
   return (
-    <section className="shell-wide pt-16 pb-20 lg:pt-32 lg:pb-32">
+    <section className="shell-wide pt-[134px] pb-[150px] lg:pt-[198px] lg:pb-[198px]">
       <div className="relative overflow-hidden rounded-[24px]">
         <img
           src={approachBackdrop}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="relative px-5 pt-10 pb-10 sm:px-8 lg:px-12 lg:pt-14 lg:pb-16">
+        <div className="relative px-5 pt-[110px] pb-[110px] sm:px-8 lg:px-12 lg:pt-[126px] lg:pb-[134px]">
           <p className="font-sans text-[13px] font-semibold tracking-[3px] text-white/85 uppercase lg:text-[14px]">
             Our Engineering Approach
           </p>
