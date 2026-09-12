@@ -69,7 +69,7 @@ export function EngineeringServices() {
           <div className="lg:max-w-[590px]">
             <Eyebrow className="!text-[18px]">Engineering Services</Eyebrow>
             <h2 className="mt-3 font-display text-[28px] leading-[1.15] font-medium text-ink sm:text-[34px] lg:text-[40px]">
-              Engineering Services That Drive Innovation
+              Capabilities That Drive Innovation.
             </h2>
           </div>
 
@@ -134,24 +134,19 @@ export function EngineeringServices() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/[0.74] to-transparent" />
 
             <div className="absolute inset-x-0 bottom-0 p-4 lg:p-[16px]">
-              <Eyebrow className="!text-[16px]">
-                Technology &amp; Innovation
-              </Eyebrow>
-              <h3 className="mt-2 max-w-[479px] font-display text-[22px] leading-[1.2] font-medium text-white lg:text-[25px]">
-                Engineering Services
-              </h3>
-
+              {/* Plain link, not a titled card — a 3rd "Engineering Services"
+                  label here duplicated the eyebrow and heading above. */}
               <a
                 href="#"
-                className="mt-5 flex items-center justify-between gap-4 rounded-full border border-white bg-black/[0.22] py-[3px] pr-[3px] pl-[37px] backdrop-blur-sm transition-colors hover:bg-black/40"
+                className="flex items-center justify-between gap-4 rounded-full border border-white bg-black/[0.22] py-[3px] pr-[3px] pl-[37px] backdrop-blur-sm transition-colors hover:bg-black/40"
               >
                 <span className="font-sans text-[18px] text-white lg:text-[21px]">
-                  Learn More
+                  Explore Engineering Services
                 </span>
                 <ChevronPill
                   className="!h-[50px] !w-[102px] !bg-white shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)]"
                   iconClassName="h-[26px] w-[26px]"
-                  label="Learn more"
+                  label="Explore Engineering Services"
                 />
               </a>
             </div>

@@ -15,6 +15,48 @@ import logoLucasTvsFooter from '../assets/image33.webp'
 import heroBackdrop from '../assets/hero-backdrop.webp'
 import heroArmMotion from '../assets/hero-arm-motion.mp4'
 
+// Hero — 3-domain diagonal slider (Home2 only) --------------------------
+import heroSlideAutomotive from '../assets/Hero/slide1.mp4'
+import heroSlideIndustrial from '../assets/Hero/slide2.mp4'
+import heroSlideDefenceAerospace from '../assets/Hero/slide3.mp4'
+
+// Focus areas — one backdrop per tab (Home2 only) ----------------------
+import focusElectrification from '../assets/Tabs/tab1.png'
+import focusSoftwareDefined from '../assets/Tabs/tab2.png'
+import focusAutomation from '../assets/Tabs/tab3.png'
+import focusMissionCritical from '../assets/Tabs/tab4.png'
+import focusAiDigital from '../assets/Tabs/tab5.png'
+
+// Focus areas — product shots for the hotspot tiles, four per tab in the
+// order they appear in the column. All transparent PNGs, so they sit
+// straight on the lime tile. Folder names carry the client's numbering
+// (image 37-56 run tab 1 -> tab 5); the export names below say what each
+// one actually is.
+import productInverter from '../assets/Tabs/tab1 img/image 37.png'
+import productTractionMotor from '../assets/Tabs/tab1 img/image 38.png'
+import productBms from '../assets/Tabs/tab1 img/image 39.png'
+import productVcu from '../assets/Tabs/tab1 img/image 40.png'
+
+import productVehicleComputingUnit from '../assets/Tabs/tab2 img/image 41.png'
+import productDomainController from '../assets/Tabs/tab2 img/image 42.png'
+import productCloudIntegration from '../assets/Tabs/tab2 img/image 43.png'
+import productCybersecurity from '../assets/Tabs/tab2 img/image 44.png'
+
+import productIndustrialRobotics from '../assets/Tabs/tab3 img/image 45.png'
+import productMachineVision from '../assets/Tabs/tab3 img/image 46.png'
+import productAgvAmr from '../assets/Tabs/tab3 img/image 47.png'
+import productSmartFactory from '../assets/Tabs/tab3 img/image 48.png'
+
+import productRuggedCompute from '../assets/Tabs/tab4 img/image 49.png'
+import productDefenceAvionics from '../assets/Tabs/tab4 img/image 50.png'
+import productSurveillanceComms from '../assets/Tabs/tab4 img/image 51.png'
+import productSafetyCriticalControl from '../assets/Tabs/tab4 img/image 52.png'
+
+import productCloudEngineering from '../assets/Tabs/tab 5 img/image 53.png'
+import productDataPlatforms from '../assets/Tabs/tab 5 img/image 54.png'
+import productAiMl from '../assets/Tabs/tab 5 img/image 55.png'
+import productDigitalEngineering from '../assets/Tabs/tab 5 img/image 56.png'
+
 // Customer logos (marquee under the hero) ------------------------------
 import logoZf from '../assets/zf-logo-std-blue3-cc1.svg'
 import logoUltraviolette from '../assets/group1.svg'
@@ -56,10 +98,13 @@ import tabConsumer from '../assets/chat-gpt-image-aug62026085929-pm1.webp'
 import focusAreasElectrificationPowertrain from '../assets/focus-areas-electrification-powertrain.png'
 
 // Our Engineering Approach (Home2 only) ---------------------------------
-import approachBackdrop from '../assets/approach.png'
+import approachBackdrop from '../assets/Group 1000002316.png'
 
 // One Integrated Engineering Stack (Home2 only) -------------------------
+// `software.png` is the original flat artwork (text baked in); the section
+// is now built from live markup over this backdrop instead.
 import integratedStack from '../assets/software.png'
+import integratedStackBackdrop from '../assets/Background (5).png'
 
 // Research & development ----------------------------------------------
 import rndFeature from '../assets/rectangle23.webp'
@@ -110,6 +155,34 @@ export {
   logoLucasTvsFooter,
   heroBackdrop,
   heroArmMotion,
+  heroSlideAutomotive,
+  heroSlideIndustrial,
+  heroSlideDefenceAerospace,
+  focusElectrification,
+  focusSoftwareDefined,
+  focusAutomation,
+  focusMissionCritical,
+  focusAiDigital,
+  productInverter,
+  productTractionMotor,
+  productBms,
+  productVcu,
+  productVehicleComputingUnit,
+  productDomainController,
+  productCloudIntegration,
+  productCybersecurity,
+  productIndustrialRobotics,
+  productMachineVision,
+  productAgvAmr,
+  productSmartFactory,
+  productRuggedCompute,
+  productDefenceAvionics,
+  productSurveillanceComms,
+  productSafetyCriticalControl,
+  productCloudEngineering,
+  productDataPlatforms,
+  productAiMl,
+  productDigitalEngineering,
   logoZf,
   logoUltraviolette,
   logoRiver,
@@ -140,6 +213,7 @@ export {
   focusAreasElectrificationPowertrain,
   approachBackdrop,
   integratedStack,
+  integratedStackBackdrop,
   rndFeature,
   iconProductEngineering,
   iconPrototype,

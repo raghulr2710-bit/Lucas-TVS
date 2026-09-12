@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, type ReactNode } from "react";
+import React, { useEffect, useId, useMemo, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -20,6 +20,17 @@ function usePrefersReducedMotion() {
 
 const DESKTOP_WIDTH = 1200;
 const TABLET_MIN_WIDTH = 768;
+
+/**
+ * Ceiling on the card's share of the viewport. `factor` only shrinks the
+ * layout below DESKTOP_WIDTH, so a card sized for a wide design would sit
+ * at full size on a 1280px laptop — where the orbit parks it right of centre
+ * and the section's `overflow-hidden` would cut its right edge off. The cap
+ * is applied to width and height together, so the aspect ratio holds, and it
+ * only binds for cards large relative to the viewport (the default 205-240px
+ * card never reaches it).
+ */
+const MAX_CARD_VW = 34;
 
 const DEPTH_MIN = -1;
 const DEPTH_MAX = 1;
@@ -127,6 +138,25 @@ interface CircularSplitRollCompProps {
   gridImageClassName?: string;
   gridCardClassName?: string;
   gridTitleClassName?: string;
+  /** Extra classes for the chevron badge on each image card — the badge and
+   *  its glyph share `currentColor`, so `hover:`/`group-hover:` utilities
+   *  here recolour both. */
+  cardIconClassName?: string;
+  /** Draws a decorative orbit ring (dotted outer circle, segmented gradient
+   *  arcs and a dot per item) behind the left text column, brightening the
+   *  dot for whichever item is currently in focus. Off by default. */
+  showOrbitRing?: boolean;
+  orbitRingSize?: number;
+  orbitRingRadius?: number;
+  orbitDotRadius?: number;
+  /** Slides the whole ring (arcs + dots) horizontally from the text column's
+   *  orbit centre. That centre sits well left of the viewport edge, so
+   *  without an offset the ring renders off-screen and its focused dot
+   *  stops short of the title. Design-space px, scaled by the same factor
+   *  as the radii. */
+  orbitRingOffsetX?: number;
+  orbitColorFrom?: string;
+  orbitColorTo?: string;
 }
 
 function CircularSplitRollComp({
@@ -177,11 +207,23 @@ function CircularSplitRollComp({
   gridImageClassName = "",
   gridCardClassName = "",
   gridTitleClassName = "",
+  cardIconClassName = "",
+
+  showOrbitRing = false,
+  orbitRingSize = 320,
+  orbitRingRadius = 130,
+  orbitDotRadius = 150,
+  orbitRingOffsetX = 0,
+  orbitColorFrom = "#b3e718",
+  orbitColorTo = "#238f38",
 }: CircularSplitRollCompProps) {
   const rootRef = useRef<HTMLElement | null>(null);
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const progressRef = useRef(0);
   const reducedMotion = usePrefersReducedMotion();
+  // SVG ids are document-global, so two instances on one page would otherwise
+  // share (and fight over) the same gradient.
+  const orbitGradientId = `orbit-ring-${useId().replace(/:/g, "")}`;
 
   const safeItems = useMemo(() => {
     return items.map((item, index) => ({
@@ -206,6 +248,9 @@ function CircularSplitRollComp({
         ) as HTMLElement[];
         const rightNodes = gsap.utils.toArray(
           ".circular-scroll-showcase__right-item"
+        ) as HTMLElement[];
+        const ringDotNodes = gsap.utils.toArray(
+          ".circular-scroll-showcase__ring-dot"
         ) as HTMLElement[];
 
         const total = safeItems.length;
@@ -232,14 +277,24 @@ function CircularSplitRollComp({
           const rightRadiusScaledY = rightRadiusY * factor;
 
           if (rootRef.current) {
+            const cardRatio = imageCardHeight / imageCardWidth;
+
             rootRef.current.style.setProperty(
               "--css-card-width",
-              `${imageCardWidth * factor}px`
+              `min(${imageCardWidth * factor}px, ${MAX_CARD_VW}vw)`
             );
 
             rootRef.current.style.setProperty(
               "--css-card-height",
-              `${imageCardHeight * factor}px`
+              `min(${imageCardHeight * factor}px, ${MAX_CARD_VW * cardRatio}vw)`
+            );
+
+            // Scaled here rather than baked into the class so the ring keeps
+            // the same relationship to the titles as they shrink on narrower
+            // desktops.
+            rootRef.current.style.setProperty(
+              "--css-orbit-offset-x",
+              `${orbitRingOffsetX * factor}px`
             );
           }
 
@@ -284,6 +339,31 @@ function CircularSplitRollComp({
               zIndex,
               transformOrigin: "50% 50%",
             });
+
+            const ringDot = ringDotNodes[index];
+            if (ringDot) {
+              // Same angle/progress as the title itself, just traced at the
+              // ring's own (smaller) radius — so the dot always orbits to
+              // sit right next to whichever title is currently in focus,
+              // instead of parking at a fixed spot on the ring.
+              const ringRadiusScaled = orbitDotRadius * factor;
+              const ringPosition = getCircularPosition(
+                localProgress,
+                ringRadiusScaled,
+                ringRadiusScaled,
+                leftAngleOffset
+              );
+
+              gsap.set(ringDot, {
+                xPercent: -50,
+                yPercent: -50,
+                x: ringPosition.x,
+                y: ringPosition.y,
+                scale: gsap.utils.interpolate(0.55, 1, focusStrength),
+                opacity: gsap.utils.interpolate(0.4, 1, focusStrength),
+                filter: `drop-shadow(0 0 ${gsap.utils.interpolate(0, 10, focusStrength)}px rgba(179,231,24,${gsap.utils.interpolate(0, 0.85, focusStrength)}))`,
+              });
+            }
           });
 
           rightNodes.forEach((node, index) => {
@@ -390,6 +470,8 @@ function CircularSplitRollComp({
     focusPhase,
     leftDepthMax,
     rightDepthMax,
+    orbitDotRadius,
+    orbitRingOffsetX,
   ]);
 
   return (
@@ -398,8 +480,8 @@ function CircularSplitRollComp({
       className={`relative w-full overflow-clip ${background ? "" : "bg-background"} ${titleColor ? "" : "text-foreground"} ${className}`}
       style={{
         "--css-title-size": titleSize,
-        "--css-card-width": `${imageCardWidth}px`,
-        "--css-card-height": `${imageCardHeight}px`,
+        "--css-card-width": `min(${imageCardWidth}px, ${MAX_CARD_VW}vw)`,
+        "--css-card-height": `min(${imageCardHeight}px, ${(MAX_CARD_VW * imageCardHeight) / imageCardWidth}vw)`,
         minHeight: viewportHeight,
         ...(background ? { background } : null),
         ...(titleColor ? { color: titleColor } : null),
@@ -419,6 +501,80 @@ function CircularSplitRollComp({
             style={{ transform: `translateX(calc(${columnSpreadVw}vw - ${columnOffsetPx}px))` }}
           >
             <div className="relative h-[92%]">
+              {showOrbitRing && safeItems.length > 0 && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-1/2 top-1/2"
+                  style={{
+                    width: orbitRingSize,
+                    height: orbitRingSize,
+                    transform:
+                      "translate(calc(-50% + var(--css-orbit-offset-x, 0px)), -50%)",
+                  }}
+                >
+                  <svg
+                    viewBox={`0 0 ${orbitRingSize} ${orbitRingSize}`}
+                    className="absolute inset-0 h-full w-full"
+                  >
+                    <circle
+                      cx={orbitRingSize / 2}
+                      cy={orbitRingSize / 2}
+                      r={orbitDotRadius}
+                      fill="none"
+                      stroke="rgba(35,143,56,0.35)"
+                      strokeWidth={1.5}
+                      strokeDasharray="1 7"
+                    />
+                    {/* One unbroken circle rather than an arc per item. The
+                        segmented version left a gap between every sector —
+                        with three items that was three 16deg breaks, so the
+                        ring never read as a closed loop. The from/to colours
+                        now run as a gradient around the stroke instead of
+                        stepping once per segment, which also drops the seam
+                        where two arcs of slightly different colour met. */}
+                    <defs>
+                      <linearGradient
+                        id={orbitGradientId}
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor={orbitColorFrom} />
+                        <stop offset="100%" stopColor={orbitColorTo} />
+                      </linearGradient>
+                    </defs>
+                    <circle
+                      cx={orbitRingSize / 2}
+                      cy={orbitRingSize / 2}
+                      r={orbitRingRadius}
+                      fill="none"
+                      stroke={`url(#${orbitGradientId})`}
+                      strokeWidth={3}
+                    />
+                  </svg>
+
+                  {safeItems.map((item) => {
+                    return (
+                      <span
+                        key={item.id}
+                        className="circular-scroll-showcase__ring-dot pointer-events-none absolute left-1/2 top-1/2 grid place-items-center rounded-full bg-white opacity-0 will-change-[transform,opacity]"
+                        style={{
+                          width: 26,
+                          height: 26,
+                          boxShadow: "0 0 0 4px rgba(255,255,255,0.9)",
+                        }}
+                      >
+                        <span
+                          className="block rounded-full"
+                          style={{ width: 12, height: 12, backgroundColor: orbitColorFrom }}
+                        />
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
+
               {safeItems.map((item) => (
                 <div
                   key={item.id}
@@ -443,7 +599,7 @@ function CircularSplitRollComp({
                   key={item.id}
                   className="circular-scroll-showcase__right-item absolute left-1/2 top-1/2 ml-[calc(var(--css-card-width,210px)*-0.5)] mt-[calc(var(--css-card-height,210px)*-0.5)] h-(--css-card-height,210px) w-(--css-card-width,210px) origin-center opacity-0 will-change-[transform,opacity]"
                 >
-                  <div className="relative h-full w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_30px_60px_rgba(0,0,0,0.28),0_8px_20px_rgba(0,0,0,0.16)]">
+                  <div className="group relative h-full w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_30px_60px_rgba(0,0,0,0.28),0_8px_20px_rgba(0,0,0,0.16)]">
                     <img
                       src={item.image}
                       alt={item.alt}
@@ -451,11 +607,16 @@ function CircularSplitRollComp({
                       draggable="false"
                     />
 
-                    <span className="absolute top-3 right-3 grid h-8 w-8 place-items-center rounded-full bg-white/25 ring-1 ring-white/40 backdrop-blur-md">
+                    {/* The chevron inherits `currentColor`, so a consumer can
+                        recolour badge and glyph together through
+                        `cardIconClassName` without reaching into the svg. */}
+                    <span
+                      className={`absolute top-3 right-3 grid h-8 w-8 place-items-center rounded-full bg-white/25 text-white ring-1 ring-white/40 backdrop-blur-md transition-colors duration-300 ${cardIconClassName}`}
+                    >
                       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                         <path
                           d="M6 3l5 5-5 5"
-                          stroke="#fff"
+                          stroke="currentColor"
                           strokeWidth="1.8"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -463,13 +624,18 @@ function CircularSplitRollComp({
                       </svg>
                     </span>
 
+                    {/* Caption type scales with the card rather than being
+                        pinned to 13/11px, so a larger card doesn't end up
+                        with a caption that reads as a footnote. The clamp
+                        floors bottom out at the previous fixed sizes, so the
+                        default 205-240px card is unchanged. */}
                     {!item.hideCaption && (
                       <div className="absolute inset-x-2 bottom-2 rounded-[10px] bg-black/25 px-3 py-2.5 backdrop-blur-md">
-                        <h4 className="text-[13px] leading-[1.2] font-medium text-white">
+                        <h4 className="text-[clamp(13px,calc(var(--css-card-width,210px)*0.032),20px)] leading-[1.2] font-medium text-white">
                           {item.title}
                         </h4>
                         {item.description && (
-                          <p className="mt-1 text-[11px] leading-[1.35] text-white/80">
+                          <p className="mt-1 text-[clamp(11px,calc(var(--css-card-width,210px)*0.023),15px)] leading-[1.35] text-white/80">
                             {item.description}
                           </p>
                         )}

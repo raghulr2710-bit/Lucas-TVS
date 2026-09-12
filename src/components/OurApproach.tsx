@@ -5,9 +5,9 @@ import {
   SquareCheck,
   Rocket,
   RefreshCw,
-  ChevronRight,
   type LucideIcon,
 } from 'lucide-react'
+import ScrollStack, { ScrollStackItem } from './ScrollStack'
 import { approachBackdrop } from '../lib/assets'
 
 const STEPS: { no: string; title: string; description: string; icon: LucideIcon }[] = [
@@ -49,74 +49,88 @@ const STEPS: { no: string; title: string; description: string; icon: LucideIcon 
   },
 ]
 
-/** Home2-only. */
+/**
+ * Home2-only. The six lifecycle stages are now a ScrollStack — each stage
+ * pins and the next slides over it as you scroll the section, instead of
+ * sitting in a static row. ScrollStack runs in container-scroll mode (its
+ * own nested scroller) rather than window mode, so it never has to fight
+ * the app-wide <ReactLenis root> for the page scroll.
+ */
 export function OurApproach() {
   return (
-    <section className="shell-wide pt-[134px] pb-[150px] lg:pt-[198px] lg:pb-[198px]">
-      <div className="relative overflow-hidden rounded-[24px]">
+    <section className="px-5 pt-[134px] pb-[150px] lg:pt-[198px] lg:pb-[198px]">
+      {/* `overflow-clip`, not `overflow-hidden`: it rounds off the backdrop
+          exactly the same way but doesn't create a scrollport, so the
+          sticky copy column below still works. */}
+      <div className="relative overflow-clip rounded-[24px]">
         <img
           src={approachBackdrop}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-left"
         />
-        <div className="relative px-5 pt-[110px] pb-[110px] sm:px-8 lg:px-12 lg:pt-[126px] lg:pb-[134px]">
-          <p className="font-sans text-[13px] font-semibold tracking-[3px] text-white/85 uppercase lg:text-[14px]">
-            Our Engineering Approach
-          </p>
-          <h2 className="mt-3 max-w-[640px] font-display text-[30px] leading-[1.15] font-medium text-white sm:text-[38px] lg:text-[44px]">
-            From Concept To <span className="text-lime">Lifecycle.</span>
-          </h2>
-          <p className="mt-4 max-w-[620px] font-body text-[14px] leading-[1.5] text-white/75 lg:text-[16px]">
-            A comprehensive engineering journey that transforms ideas into
-            intelligent, real-world solutions and keeps them evolving for a
-            smarter tomorrow.
-          </p>
 
-          {/* Steps -------------------------------------------------- */}
-          <div className="relative mt-10 lg:mt-14">
-            <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 lg:flex lg:gap-0">
-              {STEPS.map((step, i) => (
-                <div
+        <div className="relative grid gap-10 px-5 pt-[110px] pb-[110px] sm:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 lg:px-12 lg:pt-[126px] lg:pb-[134px]">
+          {/* Copy — holds its place while the stack plays through. */}
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="font-sans text-[13px] font-semibold tracking-[3px] text-white/85 uppercase lg:text-[14px]">
+              Our Engineering Approach
+            </p>
+            <h2 className="mt-3 max-w-[640px] font-display text-[30px] leading-[1.15] font-medium text-white sm:text-[38px] lg:text-[44px]">
+              From Concept To <span className="text-lime">Lifecycle.</span>
+            </h2>
+            <p className="mt-4 max-w-[620px] font-body text-[14px] leading-[1.5] text-white/75 lg:text-[16px]">
+              A comprehensive engineering journey that transforms ideas into
+              intelligent, real-world solutions and keeps them evolving for a
+              smarter tomorrow.
+            </p>
+          </div>
+
+          {/* Stacked stages ----------------------------------------- */}
+          <div className="mt-2 lg:mt-0">
+            <ScrollStack
+              useWindowScroll
+              itemDistance={90}
+              itemStackDistance={22}
+              itemScale={0.02}
+              baseScale={0.9}
+              stackPosition="30%"
+              scaleEndPosition="14%"
+              blurAmount={0.6}
+            >
+              {STEPS.map((step) => (
+                <ScrollStackItem
                   key={step.title}
-                  className="group relative flex flex-col lg:flex-1 lg:px-2 lg:first:pl-0 lg:last:pr-0"
+                  itemClassName="group flex h-[136px] items-center gap-4 rounded-[22px] border border-white/12 bg-black/80 px-5 shadow-[0_0_0_1px_rgba(179,231,24,0.16),0_18px_44px_rgba(0,0,0,0.55),0_0_34px_rgba(179,231,24,0.10)] backdrop-blur-md sm:h-[150px] sm:gap-6 sm:px-7 lg:h-[160px] lg:gap-7 lg:px-8"
                 >
-                  {/* Icon node + connecting line to the next step (desktop only) */}
-                  <div className="relative flex items-center">
-                    <span className="relative z-10 grid h-[46px] w-[46px] shrink-0 place-items-center rounded-full border border-lime/70 bg-black/50 shadow-[0_0_16px_rgba(163,230,53,0.35)] backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-lime/15 group-hover:shadow-[0_0_28px_rgba(163,230,53,0.65)] lg:h-[54px] lg:w-[54px]">
-                      <step.icon
-                        aria-hidden
-                        strokeWidth={1.75}
-                        className="h-[20px] w-[20px] text-lime lg:h-[24px] lg:w-[24px]"
-                      />
-                    </span>
+                  {/* Ring, not a filled chip: the reference reads as a hollow
+                      lime outline with the glow spilling both ways, so the
+                      glow is split into an outer drop and an inner inset. */}
+                  <span className="grid h-[64px] w-[64px] shrink-0 place-items-center rounded-full border-2 border-lime shadow-[0_0_18px_rgba(179,231,24,0.45),inset_0_0_16px_rgba(179,231,24,0.18)] transition-transform duration-300 group-hover:scale-105 sm:h-[72px] sm:w-[72px] lg:h-[78px] lg:w-[78px]">
+                    <step.icon
+                      aria-hidden
+                      strokeWidth={1.75}
+                      className="h-[26px] w-[26px] text-lime sm:h-[30px] sm:w-[30px] lg:h-[32px] lg:w-[32px]"
+                    />
+                  </span>
 
-                    {i < STEPS.length - 1 && (
-                      <span className="ml-2 hidden h-px flex-1 bg-lime/35 lg:block" />
-                    )}
-
-                    {i < STEPS.length - 1 && (
-                      <ChevronRight
-                        aria-hidden
-                        className="absolute top-1/2 -right-1 hidden h-4 w-4 -translate-y-1/2 text-lime/70 lg:block"
-                      />
-                    )}
-                  </div>
-
-                  {/* Card ------------------------------------------- */}
-                  <div className="mt-4 flex-1 rounded-[10px] border-b-[3px] border-lime bg-black/45 p-3.5 backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-black/65 group-hover:shadow-[0_12px_28px_rgba(163,230,53,0.18)] lg:p-4">
-                    <p className="font-mono text-[11px] tracking-[1px] text-white/45 transition-colors duration-300 group-hover:text-lime/80">
-                      {step.no}
-                    </p>
-                    <h3 className="mt-1 font-display text-[15px] leading-[1.2] font-medium text-white lg:text-[16px]">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-display text-[22px] leading-[1.1] font-semibold text-white sm:text-[26px] lg:text-[30px]">
                       {step.title}
                     </h3>
-                    <p className="mt-1 font-body text-[12.5px] leading-[1.4] text-white/70 transition-colors duration-300 group-hover:text-white/90 lg:text-[13.5px]">
+                    <p className="mt-1.5 font-body text-[13px] leading-[1.35] text-white/65 sm:text-[15px] lg:text-[16px]">
                       {step.description}
                     </p>
                   </div>
-                </div>
+
+                  <span aria-hidden className="h-[52px] w-px shrink-0 bg-white/20 lg:h-[62px]" />
+
+                  {/* IBM Plex Mono keeps the slashed zero the reference shows. */}
+                  <span className="shrink-0 font-mono text-[30px] leading-none font-bold text-lime sm:text-[38px] lg:text-[44px]">
+                    {step.no}
+                  </span>
+                </ScrollStackItem>
               ))}
-            </div>
+            </ScrollStack>
           </div>
         </div>
       </div>

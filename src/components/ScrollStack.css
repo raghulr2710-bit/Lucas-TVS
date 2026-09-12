@@ -1,0 +1,41 @@
+/* Page-scroll mode: no nested scroller, so no fixed height, no internal
+   overflow and no scroll trapping — the stack pins against page scroll. */
+.scroll-stack-scroller {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-stack-inner {
+  /* Trimmed from the registry default (20vh 5rem 50rem). The bottom padding
+     is the runway the whole stack stays pinned against before releasing —
+     keep some, or the stack scrolls away the instant it finishes assembling,
+     but too much leaves dead space under the last card. */
+  padding: 0 0 18vh;
+}
+
+.scroll-stack-card-wrapper {
+  position: relative;
+}
+
+/* Mechanics only. The registry ships presentational defaults here (fixed
+   height, 3rem padding, 40px radius, grey shadow) but this file is plain
+   CSS — it sits outside Tailwind's layers, so those rules would beat any
+   utility class and lock the cards out of the site's theme. Appearance is
+   set per-instance via `itemClassName` instead. */
+.scroll-stack-card {
+  transform-origin: top center;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  width: 100%;
+  box-sizing: border-box;
+  /* Improve mobile performance */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  position: relative;
+}
+
+.scroll-stack-end {
+  width: 100%;
+  height: 1px;
+}

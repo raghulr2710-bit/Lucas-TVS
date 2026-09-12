@@ -98,8 +98,8 @@ export function Hero() {
             </p>
 
             <h1 className="order-1 max-w-[575px] lg:order-2 font-display text-[44px] leading-[1.08] font-semibold text-black sm:text-[60px] lg:mt-[42px] lg:text-[80px]">
-              Engineering the{' '}
-              <span className="text-green-deep">Future</span>
+              Intelligence Inside{' '}
+              <span className="text-green-deep">Tomorrow</span>
             </h1>
 
             <Button className="order-3 mt-6 self-start lg:mt-10 lg:ml-auto">
