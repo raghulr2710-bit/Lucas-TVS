@@ -239,8 +239,8 @@ export function HeroHome2() {
                   lands on two balanced lines at `lg` without overflowing
                   narrow screens. */}
               <h1 className="max-w-[560px] font-display text-[36px] leading-[1.15] font-semibold text-balance text-white sm:text-[48px] lg:max-w-[780px] lg:text-[56px]">
-                Indian engineering for the world&rsquo;s{' '}
-                <span className="text-lime">hardest problems.</span>
+                Indian Engineering For The World&rsquo;s{' '}
+                <span className="text-lime">Hardest Problems.</span>
               </h1>
               {/* The sub-line sets to 1081px on one line, so anything under
                   ~541px forces a third row — 460px was giving three. 600px

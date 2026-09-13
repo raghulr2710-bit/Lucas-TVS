@@ -64,6 +64,25 @@
   }
 }
 
+/*
+ * Blur-in for headings (Home2), played one word at a time. Words start
+ * soft and out of focus, then resolve in sequence as the heading enters
+ * the viewport. Applied by Home2 itself rather than in each component's
+ * markup, so the shared sections it covers stay untouched for other pages.
+ */
+@keyframes heading-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
 @layer base {
   /* Smooth scrolling is handled by Lenis in App.tsx. */
 
@@ -162,6 +181,38 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /*
+   * Word-by-word blur-in. The hidden state lives on the individual words,
+   * never on the heading itself — so a heading with no words wrapped (JS
+   * yet to run, or failed outright) stays fully readable rather than
+   * disappearing. Home2 wraps the words in a layout effect, before paint,
+   * so there is no flash of un-split text first.
+   */
+  .heading-blur-word {
+    /* inline-block so the words can take a transform at all. */
+    display: inline-block;
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(12px);
+    will-change: opacity, filter, transform;
+  }
+
+  .heading-blur.is-visible .heading-blur-word {
+    animation: heading-blur-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    /* Per-word stagger, written inline by Home2. */
+    animation-delay: var(--word-delay, 0ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .heading-blur-word,
+    .heading-blur.is-visible .heading-blur-word {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      animation: none;
+    }
   }
 
   .pause-on-hover:hover > * {
