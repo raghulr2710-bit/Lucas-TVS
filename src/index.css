@@ -65,9 +65,9 @@
 }
 
 /*
- * Blur-in for headings (Home2), played one word at a time. Words start
+ * Blur-in for headings (Home2, Home3), played one word at a time. Words start
  * soft and out of focus, then resolve in sequence as the heading enters
- * the viewport. Applied by Home2 itself rather than in each component's
+ * the viewport. Applied by the page itself rather than in each component's
  * markup, so the shared sections it covers stay untouched for other pages.
  */
 @keyframes heading-blur-in {
@@ -187,7 +187,7 @@
    * Word-by-word blur-in. The hidden state lives on the individual words,
    * never on the heading itself — so a heading with no words wrapped (JS
    * yet to run, or failed outright) stays fully readable rather than
-   * disappearing. Home2 wraps the words in a layout effect, before paint,
+   * disappearing. The page wraps the words in a layout effect, before paint,
    * so there is no flash of un-split text first.
    */
   .heading-blur-word {
@@ -201,7 +201,7 @@
 
   .heading-blur.is-visible .heading-blur-word {
     animation: heading-blur-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-    /* Per-word stagger, written inline by Home2. */
+    /* Per-word stagger, written inline by the page. */
     animation-delay: var(--word-delay, 0ms);
   }
 

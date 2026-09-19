@@ -9,13 +9,19 @@
 import sharp from 'sharp'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const DIR = new URL('../src/assets/', import.meta.url).pathname.replace(/^\//, '')
+// `fileURLToPath`, not `.pathname`: a URL's pathname is percent-encoded, so
+// any space in a parent directory arrives as "%20" and the readdir fails
+// with ENOENT. It also strips the leading slash Windows drive paths don't
+// want, which is what the old `.replace(/^\//, '')` was there for.
+const DIR = fileURLToPath(new URL('../src/assets/', import.meta.url))
 
 /** file stem -> max width in px (2x the largest rendered width). */
 const TARGET_WIDTH = {
   'hero-backdrop': 1920,
   rectangle5: 1800,
+  abtimg: 1800,
   background: 1800,
   background1: 1600,
   rectangle9986: 1800,

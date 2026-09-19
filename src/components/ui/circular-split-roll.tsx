@@ -129,6 +129,16 @@ interface CircularSplitRollCompProps {
   rightAngleOffset?: number;
   /** Which item sits on the focus arc, in item-fractions. 0.5 = between two, 0 = on one. */
   focusPhase?: number;
+  /** How much of a full revolution the pinned scroll covers. Defaults to 1 —
+   *  a complete turn, which lands the last item back on the one that was in
+   *  focus when the section pinned, so the final stretch of scroll repeats a
+   *  frame the visitor has already seen.
+   *
+   *  Set it to `(items - 1) / items` to stop on the LAST item instead: with
+   *  three items that is 2/3, giving item3 -> item1 -> item2 and releasing
+   *  the pin there, with no wrap back. Any fraction works; values above 1
+   *  spin through the set more than once. */
+  rotationTurns?: number;
   /** Max z-index applied to the focused title / image (depth stacking). */
   leftDepthMax?: number;
   rightDepthMax?: number;
@@ -199,6 +209,7 @@ function CircularSplitRollComp({
   leftAngleOffset = Math.PI,
   rightAngleOffset = 0,
   focusPhase = 0.5,
+  rotationTurns = 1,
   leftDepthMax = 30,
   rightDepthMax = 40,
   columnSpreadVw = 5,
@@ -298,8 +309,14 @@ function CircularSplitRollComp({
             );
           }
 
+          // How far around the circle this scroll position has carried us.
+          // `rotationTurns` of 1 is a full revolution over the pinned range
+          // (the original behaviour); a smaller fraction stops the carousel
+          // short of returning to its first frame.
+          const spin = scrollProgress * rotationTurns;
+
           leftNodes.forEach((node, index) => {
-            const localProgress = wrapProgress(index / total - scrollProgress + focusPhase / total);
+            const localProgress = wrapProgress(index / total - spin + focusPhase / total);
 
             const position = getCircularPosition(
               localProgress,
@@ -367,7 +384,7 @@ function CircularSplitRollComp({
           });
 
           rightNodes.forEach((node, index) => {
-            const localProgress = wrapProgress(index / total - scrollProgress + focusPhase / total);
+            const localProgress = wrapProgress(index / total - spin + focusPhase / total);
 
             const position = getCircularPosition(
               localProgress,
@@ -468,6 +485,7 @@ function CircularSplitRollComp({
     leftAngleOffset,
     rightAngleOffset,
     focusPhase,
+    rotationTurns,
     leftDepthMax,
     rightDepthMax,
     orbitDotRadius,

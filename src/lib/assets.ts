@@ -15,10 +15,22 @@ import logoLucasTvsFooter from '../assets/image33.webp'
 import heroBackdrop from '../assets/hero-backdrop.webp'
 import heroArmMotion from '../assets/hero-arm-motion.mp4'
 
-// Hero — 3-domain diagonal slider (Home2 only) --------------------------
+// Hero — 3-domain diagonal slider (Home2 and Home3) ---------------------
 import heroSlideAutomotive from '../assets/Hero/slide1.mp4'
 import heroSlideIndustrial from '../assets/Hero/slide2.mp4'
 import heroSlideDefenceAerospace from '../assets/Hero/slide3.mp4'
+
+// Hero — Home3's re-shot Industrial and Defence clips, per the 16 Sep
+// review. Industrial drops the manufacturing / assembly animation for IoT
+// connectivity, and Defence drops the space and satellite imagery (there is
+// no space capability today) for land, water and sea. Automotive was
+// explicitly kept as it stands, so there is no `h3slide1` — Home3 goes on
+// using `heroSlideAutomotive` above.
+//
+// Separate exports rather than repointing the three above, because Home2
+// still runs the original set and must not move.
+import heroSlideIndustrialHome3 from '../assets/Hero/h3slide2.mp4'
+import heroSlideDefenceAerospaceHome3 from '../assets/Hero/h3slide3.mp4'
 
 // Focus areas — one backdrop per tab (Home2 only) ----------------------
 import focusElectrification from '../assets/Tabs/tab1.png'
@@ -74,6 +86,24 @@ import logoLombardini from '../assets/lombardini1.webp'
 
 // Who we are ----------------------------------------------------------
 import facilityAerial from '../assets/rectangle5.webp'
+// Home3 only. Replaces the aerial campus shot above, which the 16 Sep
+// review ruled out along with all other plant and factory imagery — the
+// division sells software and services, and hardware photography sends the
+// wrong signal. Same 1.756 aspect and the same transparent notch across the
+// top-left corner, so it drops into the existing layout unchanged.
+// `facilityAerial` stays exactly as it is for Home, NewHome and Home2.
+import aboutEngineering from '../assets/abtimg.webp'
+
+// Focus-area grid — Home3's bento section under Engineering Services.
+// Artwork only: each file is the illustration cropped out of the client's
+// 19 Sep reference, with the baked-in headings left behind so the card
+// titles can be live, editable markup instead of pixels.
+import focusGridElectrification from '../assets/FocusGrid/electrification.webp'
+import focusGridElectrification2 from '../assets/FocusGrid/electrification2.webp'
+import focusGridSoftwareDefined from '../assets/FocusGrid/software-defined.webp'
+import focusGridAutomation from '../assets/FocusGrid/automation.webp'
+import focusGridMissionCritical from '../assets/FocusGrid/mission-critical.webp'
+import focusGridAiDigital from '../assets/FocusGrid/ai-digital.webp'
 
 // Industries we serve --------------------------------------------------
 import industryTwoThreeWheeler from '../assets/rectangle13.webp'
@@ -158,6 +188,8 @@ export {
   heroSlideAutomotive,
   heroSlideIndustrial,
   heroSlideDefenceAerospace,
+  heroSlideIndustrialHome3,
+  heroSlideDefenceAerospaceHome3,
   focusElectrification,
   focusSoftwareDefined,
   focusAutomation,
@@ -197,6 +229,13 @@ export {
   logoPolaris,
   logoLombardini,
   facilityAerial,
+  aboutEngineering,
+  focusGridElectrification,
+  focusGridElectrification2,
+  focusGridSoftwareDefined,
+  focusGridAutomation,
+  focusGridMissionCritical,
+  focusGridAiDigital,
   industryTwoThreeWheeler,
   industryPassenger,
   industryCommercial,
