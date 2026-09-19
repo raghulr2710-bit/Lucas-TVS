@@ -295,7 +295,7 @@ function Card({ card }: { card: FocusCard }) {
  */
 export function FocusGridHome3() {
   return (
-    <section id="focus-grid" className="shell-wide pb-16 lg:pb-24">
+    <section id="focus-grid" className="shell-wide pt-[70px] pb-16 lg:pb-24">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
         {CARDS.map((card) => (
           <Card key={card.id} card={card} />
