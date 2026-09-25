@@ -6,9 +6,10 @@ import { WhoWeAreHome3 } from '../components/WhoWeAreHome3'
 import { IndustriesAnimatedHome3 } from '../components/IndustriesAnimatedHome3'
 import { EngineeringServicesHome3 } from '../components/EngineeringServicesHome3'
 import { FocusGridHome3 } from '../components/FocusGridHome3'
+import { SolutionsFinderHome3 } from '../components/SolutionsFinderHome3'
 import { OurApproachHome3 } from '../components/OurApproachHome3'
 import { WhyChooseUsHome3 } from '../components/WhyChooseUsHome3'
-import { Careers } from '../components/Careers'
+import { CareersHome3 } from '../components/CareersHome3'
 import { InsightsHome3 } from '../components/InsightsHome3'
 import { SiteFooterHome3 } from '../components/SiteFooterHome3'
 
@@ -162,6 +163,7 @@ export default function Home3() {
           <IndustriesAnimatedHome3 />
           <FocusGridHome3 />
           <EngineeringServicesHome3 />
+          <SolutionsFinderHome3 />
           <OurApproachHome3 />
           {/* One Integrated Engineering Stack was here. Cut in the 16 Sep
               review: there is nothing to put behind "hardware + software
@@ -175,7 +177,7 @@ export default function Home3() {
               Recorded there: our position was that buyers do look at
               sustainability, which is why it was in; Shrihari's call is to
               let the parent site carry it. */}
-          <Careers />
+          <CareersHome3 />
           <InsightsHome3 />
         </div>
       </main>

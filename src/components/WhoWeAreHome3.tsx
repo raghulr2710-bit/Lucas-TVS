@@ -10,7 +10,8 @@ import { aboutEngineering } from '../lib/assets'
  * then asked for the stat strip alone to come back off. So of the three:
  *
  *   - the campus photo is gone after all, but by replacement rather than
- *     removal: `aboutEngineering` (src/assets/abtimg.webp) is a supplied
+ *     removal: `aboutEngineering` (src/assets/about-engineering-light.webp)
+ *     is a supplied
  *     engineering composite — robot arm, board, edge compute, dashboards —
  *     with the same aspect and the same transparent corner notch, so the
  *     layout below is unchanged from the parent's,

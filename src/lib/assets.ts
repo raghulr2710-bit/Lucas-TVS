@@ -92,7 +92,14 @@ import facilityAerial from '../assets/rectangle5.webp'
 // wrong signal. Same 1.756 aspect and the same transparent notch across the
 // top-left corner, so it drops into the existing layout unchanged.
 // `facilityAerial` stays exactly as it is for Home, NewHome and Home2.
-import aboutEngineering from '../assets/abtimg.webp'
+//
+// 24 Sep: relit version supplied, same scene on a pale mint ground instead
+// of near-black. Pixel-identical geometry — 1257x716, and the transparent
+// notch measures 601x269 in both — so it is a straight swap with no layout
+// change. New filename rather than an overwrite of abtimg.webp: replacing
+// artwork in place leaves the old copy cached under the unchanged URL,
+// which is exactly what went wrong on the Solutions cards.
+import aboutEngineering from '../assets/about-engineering-light.webp'
 
 // Focus-area grid — Home3's bento section under Engineering Services.
 // Artwork only: each file is the illustration cropped out of the client's
@@ -104,6 +111,39 @@ import focusGridSoftwareDefined from '../assets/FocusGrid/software-defined.webp'
 import focusGridAutomation from '../assets/FocusGrid/automation.webp'
 import focusGridMissionCritical from '../assets/FocusGrid/mission-critical.webp'
 import focusGridAiDigital from '../assets/FocusGrid/ai-digital.webp'
+
+// Solutions finder — Home3's 4-tab "What are you looking for?" section.
+// Artwork only, cropped out of the client's 22 Sep reference screens: the
+// headings, badges, category labels and the globe's sector legend were all
+// left behind so they can be live markup rather than pixels.
+// Products: the client's 22 Sep full-resolution cutaway, which superseded
+// the low-resolution crop taken from the reference screen.
+import solutionsBgVehicle from '../assets/Solutions/bg-vehicle.webp'
+// Engineering Services has its own backdrop again (supplied 22 Sep): the
+// exploded assemblies, board, car body, plant and aircraft together say
+// "across all three sectors" in a way the vehicle alone did not.
+import solutionsBgServices from '../assets/Solutions/bg-engineering-stack.webp'
+import solutionsBgTechnologies from '../assets/Solutions/bg-silicon-stack.webp'
+import solutionsBgIndustry from '../assets/Solutions/bg-connected-globe.webp'
+
+import productAcGenerator from '../assets/Solutions/Products/ac-generator.webp'
+import productIsgController from '../assets/Solutions/Products/isg-controller.webp'
+import productIgnitionCoils from '../assets/Solutions/Products/ignition-coils.webp'
+import productInverterShot from '../assets/Solutions/Products/inverter.webp'
+import productTractionMotorShot from '../assets/Solutions/Products/traction-motor.webp'
+import productBmsShot from '../assets/Solutions/Products/bms.webp'
+import productReductionGear from '../assets/Solutions/Products/reduction-gear.webp'
+import productBatteryCooling from '../assets/Solutions/Products/battery-cooling.webp'
+
+import techElectrification from '../assets/Solutions/tech-electrification.webp'
+import techSoftwareDefined from '../assets/Solutions/tech-software-defined.webp'
+import techAutomation from '../assets/Solutions/tech-automation.webp'
+import techMissionCritical from '../assets/Solutions/tech-mission-critical.webp'
+import techAiDigital from '../assets/Solutions/tech-ai-digital.webp'
+
+import programmeElectrifiedPowertrain from '../assets/Solutions/prog-electrified-powertrain.webp'
+import programmeVehicleControlUnits from '../assets/Solutions/prog-vehicle-control-units.webp'
+import programmeValidationHomologation from '../assets/Solutions/prog-validation-homologation.webp'
 
 // Industries we serve --------------------------------------------------
 import industryTwoThreeWheeler from '../assets/rectangle13.webp'
@@ -174,6 +214,12 @@ import whySustainableMobility from '../assets/Rectangle 10015.png'
 // Sustainability & careers --------------------------------------------
 import windFarm from '../assets/rectangle10002.webp'
 import careersBackdrop from '../assets/rectangle10006.webp'
+// Home3 only. The 22 Sep reference replaces the full-bleed campus photo
+// with a split layout, so this is the right-hand scene cropped out of it:
+// the engineer and her holographic HUD, clear of the reference's own copy
+// on the left and its PEOPLE / IDEAS block on the right, both of which are
+// live markup in the component.
+import careersScene from '../assets/Careers/careers-scene.webp'
 
 // Insights -------------------------------------------------------------
 import insightFeature from '../assets/rectangle23.webp'
@@ -236,6 +282,26 @@ export {
   focusGridAutomation,
   focusGridMissionCritical,
   focusGridAiDigital,
+  solutionsBgVehicle,
+  solutionsBgServices,
+  solutionsBgTechnologies,
+  solutionsBgIndustry,
+  productAcGenerator,
+  productIsgController,
+  productIgnitionCoils,
+  productInverterShot,
+  productTractionMotorShot,
+  productBmsShot,
+  productReductionGear,
+  productBatteryCooling,
+  techElectrification,
+  techSoftwareDefined,
+  techAutomation,
+  techMissionCritical,
+  techAiDigital,
+  programmeElectrifiedPowertrain,
+  programmeVehicleControlUnits,
+  programmeValidationHomologation,
   industryTwoThreeWheeler,
   industryPassenger,
   industryCommercial,
@@ -282,6 +348,7 @@ export {
   whySustainableMobility,
   windFarm,
   careersBackdrop,
+  careersScene,
   insightFeature,
   insightTruck,
   insightCar,
