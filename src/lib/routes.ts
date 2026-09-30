@@ -1,0 +1,176 @@
+/**
+ * Single source of truth for the inner-page information architecture.
+ *
+ * The nav, the footer, the breadcrumbs and the search index all read from
+ * here, so adding a page means editing this file and adding one <Route>
+ * in App.tsx — nothing else has to be kept in sync by hand.
+ *
+ * Route strings are written out in full rather than composed, so a grep
+ * for "/industries/automotive" finds every use.
+ */
+
+export const ROUTES = {
+  /** Home3 is the main homepage (30 Sep). /home3 still works — it redirects here. */
+  home: '/',
+  about: '/about',
+  capabilities: '/capabilities',
+  engineering: '/engineering-rd',
+  technologies: '/technologies',
+  products: '/products',
+  industries: '/industries',
+  automotive: '/industries/automotive',
+  industrial: '/industries/industrial',
+  defence: '/industries/defence-aerospace',
+  quality: '/quality',
+  sustainability: '/sustainability',
+  insights: '/insights',
+  careers: '/careers',
+  contact: '/contact',
+  search: '/search',
+} as const
+
+export function productPath(slug: string) {
+  return `${ROUTES.products}/${slug}`
+}
+
+export function insightPath(slug: string) {
+  return `${ROUTES.insights}/${slug}`
+}
+
+export type NavItem = {
+  label: string
+  to: string
+  /** Renders as a dropdown in the desktop bar and a nested list on mobile. */
+  children?: { label: string; to: string; blurb?: string }[]
+}
+
+/**
+ * Desktop/mobile navigation. Order and labels follow the wireframe header
+ * (About · Capabilities · Products · Industries · Quality · Insights ·
+ * Careers) — Industries gains a dropdown because the wireframes give it
+ * three child pages and a landing page.
+ */
+export const NAV: NavItem[] = [
+  { label: 'About', to: ROUTES.about },
+  {
+    label: 'Capabilities',
+    to: ROUTES.capabilities,
+    children: [
+      {
+        label: 'Engineering Services',
+        to: ROUTES.capabilities,
+        blurb: 'Eight service families across the product lifecycle',
+      },
+      {
+        label: 'Technologies',
+        to: ROUTES.technologies,
+        blurb: 'The five focus areas our teams are organised around',
+      },
+      {
+        label: 'Engineering & R&D',
+        to: ROUTES.engineering,
+        blurb: 'How we work, and where',
+      },
+    ],
+  },
+  { label: 'Products', to: ROUTES.products },
+  {
+    label: 'Industries',
+    to: ROUTES.industries,
+    children: [
+      {
+        label: 'Automotive',
+        to: ROUTES.automotive,
+        blurb: 'Electrification, SDV, connected mobility',
+      },
+      {
+        label: 'Industrial',
+        to: ROUTES.industrial,
+        blurb: 'Smart manufacturing, IIoT, motion and energy',
+      },
+      {
+        label: 'Defence & Aerospace',
+        to: ROUTES.defence,
+        blurb: 'Mission systems, real-time software, rugged electronics',
+      },
+    ],
+  },
+  { label: 'Quality', to: ROUTES.quality },
+  { label: 'Insights', to: ROUTES.insights },
+  { label: 'Careers', to: ROUTES.careers },
+]
+
+export type FooterColumn = {
+  heading: string
+  links: { label: string; to?: string; href?: string }[]
+}
+
+/**
+ * Footer columns, matching the wireframe footer. `to` is an internal
+ * route; `href` is an external link and renders with target="_blank".
+ */
+export const FOOTER_COLUMNS: FooterColumn[] = [
+  {
+    heading: 'Industries',
+    links: [
+      { label: 'Automotive', to: ROUTES.automotive },
+      { label: 'Industrial', to: ROUTES.industrial },
+      { label: 'Defence & Aerospace', to: ROUTES.defence },
+    ],
+  },
+  {
+    heading: 'Company',
+    links: [
+      { label: 'About', to: ROUTES.about },
+      { label: 'Careers', to: ROUTES.careers },
+      { label: 'Contact', to: ROUTES.contact },
+    ],
+  },
+  {
+    heading: 'Services',
+    links: [
+      { label: 'Engineering Services', to: ROUTES.capabilities },
+      { label: 'Technologies', to: ROUTES.technologies },
+      { label: 'Engineering & R&D', to: ROUTES.engineering },
+    ],
+  },
+  {
+    heading: 'Products',
+    links: [
+      { label: 'Products & Platforms', to: ROUTES.products },
+      {
+        label: 'Lucas-TVS Products',
+        href: 'https://lucas-tvs.com/automotive-solutions-products/',
+      },
+      {
+        label: 'India Nippon (INEL) Products',
+        href: 'https://www.indianippon.com/Products-Solutions',
+      },
+    ],
+  },
+  {
+    heading: 'Resources',
+    links: [
+      { label: 'Insights & Resources', to: ROUTES.insights },
+      { label: 'Quality & Standards', to: ROUTES.quality },
+      { label: 'Sustainability', to: ROUTES.sustainability },
+    ],
+  },
+]
+
+/** Company details, given in the wireframes and reused across pages. */
+export const COMPANY = {
+  addressName: 'India Nippon Electricals Limited (INEL) — R&D Tech Center',
+  addressLines: [
+    'Plot No. 137, Phase-1, SIPCOT Industrial Complex,',
+    'Hosur, Tamil Nadu 635126',
+  ],
+  /**
+   * Phone and email are still "XXXXXXXXXXX" / "XXXX@lucastvs.co.in" in the
+   * client's own wireframe. Left null rather than invented — the Contact
+   * page renders an awaiting-detail note in their place.
+   */
+  phone: null as string | null,
+  email: null as string | null,
+  careersPortal: 'https://career.lucas-tvs.com',
+}
