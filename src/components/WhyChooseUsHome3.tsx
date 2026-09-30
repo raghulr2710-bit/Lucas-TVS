@@ -127,7 +127,9 @@ export function WhyChooseUsHome3() {
             engineering — electronics, embedded, cloud and AI under one roof,
             across Automotive, Industrial and Defence.
           </p>
-          <Button className="mt-6">Explore More</Button>
+          <Button href="/about" className="mt-6">
+            Explore More
+          </Button>
         </div>
       </motion.header>
 

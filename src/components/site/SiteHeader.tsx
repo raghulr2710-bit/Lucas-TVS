@@ -3,7 +3,10 @@ import { Link, useLocation } from 'react-router-dom'
 import { cx } from '../../lib/cx'
 import { logoLucasTvs } from '../../lib/assets'
 import { NAV, ROUTES } from '../../lib/routes'
+import { useScrolled } from '../../lib/useScrolled'
 import { FRAME } from './design'
+import { MEGA_BY_ROUTE, PRODUCT_SECTOR_LINKS, useMegaMenu } from '../../lib/useMegaMenu'
+import { MegaNavItem } from './MegaMenu'
 
 /**
  * The mobile sheet's state: closed on navigation and on Escape, with page
@@ -11,7 +14,7 @@ import { FRAME } from './design'
  */
 function useMenus() {
   const [open, setOpen] = useState(false)
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   // Close the sheet on navigation — without this the mobile sheet stays
   // open over the page it just navigated to.
@@ -19,9 +22,11 @@ function useMenus() {
   // Adjusted during render rather than in an effect. An effect would paint
   // the new page once with the sheet still over it and then close it, and
   // it also covers back/forward, which a close-on-click handler would miss.
-  const [lastPath, setLastPath] = useState(pathname)
-  if (lastPath !== pathname) {
-    setLastPath(pathname)
+  // The query counts too: /products?sector=… from /products is still a
+  // navigation, and the sheet should get out of its way.
+  const [lastPath, setLastPath] = useState(pathname + search)
+  if (lastPath !== pathname + search) {
+    setLastPath(pathname + search)
     setOpen(false)
   }
 
@@ -63,56 +68,99 @@ function useMenus() {
  *   - The reference draws the logo as a "Lucas TVS" text box. That is a
  *     wireframe stand-in; the real logo is used, knocked out to white the
  *     way Home3 does it.
- *   - Parents render as plain links, as drawn — no dropdown chevrons. The
- *     landing pages they lead to carry the child links one click on. The
- *     mobile sheet still lists the children, where there is room.
+ *   - Parents render as plain links, as drawn — except Products and
+ *     Industries, which open mega menus (30 Sep; see MegaMenu.tsx). The
+ *     mobile sheet lists the children instead, Products' sector ranges
+ *     included.
  *   - Below `xl` the links collapse behind the reference's round lime menu
  *     button.
  *
- * Absolute rather than sticky: it belongs to the hero it sits on, exactly
- * as the Home3 header does.
+ * Sticky, and white once scrolled (30 Sep). It is fixed to the top of the
+ * viewport throughout — at the top of the page that looks exactly like the
+ * bar sitting on the hero, since the hero is under it either way. Past
+ * 60px of scroll it turns into a solid white bar: dark type, the logo in
+ * its own colours rather than knocked out, the current section in green,
+ * and a lime CTA, since a white pill would vanish on a white bar. The mobile
+ * sheet follows the same tone. Home3's header does the same.
  */
 export function SiteHeader() {
   const { open, setOpen, isActive } = useMenus()
+  const solid = useScrolled()
+  const mega = useMegaMenu()
+
+  /** Link colours for the bar, shared by plain links and mega triggers. */
+  const linkClass = (active: boolean, open = false) =>
+    cx(
+      'border-b-2 py-1 font-body text-[15px] transition-colors duration-300',
+      active
+        ? solid
+          ? 'border-green-deep font-semibold text-green-deep'
+          : 'border-lime font-semibold text-white'
+        : solid
+          ? cx('border-transparent hover:text-green-deep', open ? 'text-green-deep' : 'text-ink')
+          : cx('border-transparent hover:text-lime', open ? 'text-lime' : 'text-white/90'),
+    )
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 pt-5">
+    <header
+      className={cx(
+        'fixed inset-x-0 top-0 z-50 transition-[padding] duration-300',
+        solid ? 'pt-3' : 'pt-5',
+      )}
+    >
       <div className={FRAME}>
         <nav
           aria-label="Primary"
-          className="flex h-[60px] items-center justify-between gap-6 rounded-[16px] border border-[#3a3c3a] bg-[rgba(16,18,17,0.72)] pr-2.5 pl-3 backdrop-blur-md lg:h-[72px] lg:rounded-[18px] lg:pr-3 lg:pl-4"
+          className={cx(
+            'relative flex h-[60px] items-center justify-between gap-6 rounded-[16px] border pr-2.5 pl-3 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 lg:h-[72px] lg:rounded-[18px] lg:pr-3 lg:pl-4',
+            solid
+              ? 'border-line-soft bg-white/95 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
+              : 'border-[#3a3c3a] bg-[rgba(16,18,17,0.72)]',
+          )}
         >
           <Link to={ROUTES.home} className="shrink-0 py-1" aria-label="Lucas-TVS home">
             <img
               src={logoLucasTvs}
               alt="Lucas-TVS"
-              className="h-[34px] w-auto brightness-0 invert lg:h-[42px]"
+              className={cx(
+                'h-[34px] w-auto transition-[filter] duration-300 lg:h-[42px]',
+                !solid && 'brightness-0 invert',
+              )}
             />
           </Link>
 
           <ul className="hidden items-center gap-[34px] xl:flex">
-            {NAV.map((item) => (
-              <li key={item.label}>
-                <Link
-                  to={item.to}
-                  aria-current={isActive(item) ? 'page' : undefined}
-                  className={cx(
-                    'block border-b-2 py-1 font-body text-[15px] transition-colors',
-                    isActive(item)
-                      ? 'border-lime font-semibold text-white'
-                      : 'border-transparent text-white/90 hover:text-lime',
-                  )}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {NAV.map((item) => {
+              const id = MEGA_BY_ROUTE[item.to]
+              return id ? (
+                <MegaNavItem
+                  key={item.label}
+                  id={id}
+                  label={item.label}
+                  mega={mega}
+                  className={linkClass(isActive(item), mega.openId === id)}
+                />
+              ) : (
+                <li key={item.label}>
+                  <Link
+                    to={item.to}
+                    aria-current={isActive(item) ? 'page' : undefined}
+                    className={cx('block', linkClass(isActive(item)))}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
 
           <div className="flex items-center gap-3">
             <Link
               to={ROUTES.contact}
-              className="hidden rounded-full bg-white px-[22px] py-3 font-body text-[15px] font-medium whitespace-nowrap text-ink transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:inline-flex"
+              className={cx(
+                'hidden rounded-full px-[22px] py-3 font-body text-[15px] font-medium whitespace-nowrap text-ink transition-[transform,background-color] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 lg:inline-flex',
+                solid ? 'bg-lime focus-visible:outline-ink' : 'bg-white focus-visible:outline-white',
+              )}
             >
               Talk to Engineering
             </Link>
@@ -143,26 +191,54 @@ export function SiteHeader() {
         </nav>
 
         {open && (
-          <div className="mt-2 max-h-[calc(100dvh-120px)] overflow-y-auto rounded-[16px] border border-[#3a3c3a] bg-[rgba(16,18,17,0.94)] p-4 backdrop-blur-md xl:hidden">
+          <div
+            className={cx(
+              'mt-2 max-h-[calc(100dvh-120px)] overflow-y-auto rounded-[16px] border p-4 backdrop-blur-md xl:hidden',
+              solid
+                ? 'border-line-soft bg-white shadow-[0_18px_44px_rgba(0,0,0,0.12)]'
+                : 'border-[#3a3c3a] bg-[rgba(16,18,17,0.94)]',
+            )}
+          >
             <ul className="grid gap-1">
-              {NAV.map((item) => (
+              {NAV.map((item) => {
+                // Products' sector ranges, only while its mega menu is on.
+                const children =
+                  item.children ??
+                  (MEGA_BY_ROUTE[item.to] === 'products' ? PRODUCT_SECTOR_LINKS : undefined)
+                return (
                 <li key={item.label}>
                   <Link
                     to={item.to}
                     className={cx(
                       'block rounded-lg px-3 py-3 font-body text-[15px] font-medium transition-colors',
-                      isActive(item) ? 'bg-white/10 text-lime' : 'text-white hover:bg-white/10',
+                      solid
+                        ? isActive(item)
+                          ? 'bg-lime-tint text-green-deep'
+                          : 'text-ink hover:bg-surface-mute'
+                        : isActive(item)
+                          ? 'bg-white/10 text-lime'
+                          : 'text-white hover:bg-white/10',
                     )}
                   >
                     {item.label}
                   </Link>
-                  {item.children && (
-                    <ul className="mt-1 mb-2 ml-3 grid gap-0.5 border-l border-white/15 pl-3">
-                      {item.children.map((child) => (
+                  {children && (
+                    <ul
+                      className={cx(
+                        'mt-1 mb-2 ml-3 grid gap-0.5 border-l pl-3',
+                        solid ? 'border-line-soft' : 'border-white/15',
+                      )}
+                    >
+                      {children.map((child) => (
                         <li key={child.to}>
                           <Link
                             to={child.to}
-                            className="block rounded-lg px-3 py-3 font-body text-[14px] text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+                            className={cx(
+                              'block rounded-lg px-3 py-3 font-body text-[14px] transition-colors',
+                              solid
+                                ? 'text-body hover:bg-surface-mute hover:text-ink'
+                                : 'text-white/75 hover:bg-white/10 hover:text-white',
+                            )}
                           >
                             {child.label}
                           </Link>
@@ -171,11 +247,15 @@ export function SiteHeader() {
                     </ul>
                   )}
                 </li>
-              ))}
+                )
+              })}
             </ul>
             <Link
               to={ROUTES.contact}
-              className="mt-3 flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 font-body text-[15px] font-medium text-ink"
+              className={cx(
+                'mt-3 flex w-full items-center justify-center rounded-full px-6 py-3.5 font-body text-[15px] font-medium text-ink',
+                solid ? 'bg-lime' : 'bg-white',
+              )}
             >
               Talk to Engineering
             </Link>

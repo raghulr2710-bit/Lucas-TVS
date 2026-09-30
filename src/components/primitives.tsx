@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { cx } from '../lib/cx'
+import { AppLink } from './AppLink'
 
 /** Small uppercase/coloured kicker that sits above most section headings. */
 export function Eyebrow({
@@ -28,7 +29,13 @@ type ButtonProps = ComponentPropsWithoutRef<'a'> & {
   variant?: 'solid' | 'outline' | 'ghost'
 }
 
-/** Pill button. `solid` is the lime primary used across the page. */
+/**
+ * Pill button. `solid` is the lime primary used across the page.
+ *
+ * Renders through AppLink, so an internal href ("/contact") navigates
+ * client-side and an external one opens in a new tab. The default "#" is a
+ * plain anchor, exactly as before.
+ */
 export function Button({
   variant = 'solid',
   className,
@@ -37,7 +44,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <a
+    <AppLink
       href={href}
       className={cx(
         'inline-flex items-center justify-center gap-2 rounded-full px-8 py-4',
@@ -54,7 +61,7 @@ export function Button({
       {...rest}
     >
       {children}
-    </a>
+    </AppLink>
   )
 }
 

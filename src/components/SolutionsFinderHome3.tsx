@@ -27,11 +27,13 @@ import {
   type LucideProps,
 } from 'lucide-react'
 import { cx } from '../lib/cx'
+import { AppLink } from './AppLink'
 import {
   solutionsBgVehicle,
   solutionsBgServices,
   solutionsBgTechnologies,
   solutionsBgIndustry,
+  solutionsPanelWaves,
   productAcGenerator,
   productIsgController,
   productIgnitionCoils,
@@ -72,20 +74,20 @@ const PRODUCTS: Product[] = [
     name: 'AC Generator',
     category: 'Electrical Systems',
     image: productAcGenerator,
-    href: '#',
+    href: '/products',
     featured: true,
   },
-  { name: 'ISG - Controller', category: 'Power Electronics', image: productIsgController, href: '#' },
-  { name: 'Ignition Coils', category: 'Ignition Systems', image: productIgnitionCoils, href: '#' },
-  { name: 'Inverter', category: 'Power Electronics', image: productInverterShot, href: '#' },
-  { name: 'Traction Motor', category: 'Powertrain', image: productTractionMotorShot, href: '#' },
-  { name: 'BMS', category: 'Energy Systems', image: productBmsShot, href: '#' },
-  { name: 'Reduction Gear', category: 'Drivetrain', image: productReductionGear, href: '#' },
+  { name: 'ISG - Controller', category: 'Power Electronics', image: productIsgController, href: '/products/motor-controllers' },
+  { name: 'Ignition Coils', category: 'Ignition Systems', image: productIgnitionCoils, href: '/products' },
+  { name: 'Inverter', category: 'Power Electronics', image: productInverterShot, href: '/products' },
+  { name: 'Traction Motor', category: 'Powertrain', image: productTractionMotorShot, href: '/products' },
+  { name: 'BMS', category: 'Energy Systems', image: productBmsShot, href: '/products/battery-management-systems' },
+  { name: 'Reduction Gear', category: 'Drivetrain', image: productReductionGear, href: '/products' },
   {
     name: 'Battery Cooling System',
     category: 'Thermal Systems',
     image: productBatteryCooling,
-    href: '#',
+    href: '/products',
   },
 ]
 
@@ -96,49 +98,49 @@ const SERVICES: Service[] = [
     title: 'Product Engineering',
     blurb: 'Concept to deployment and lifecycle management.',
     icon: Boxes,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Embedded Systems',
     blurb: 'Intelligent embedded platforms for connected products.',
     icon: Code2,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Software Engineering',
     blurb: 'Scalable software platforms and applications.',
     icon: MonitorSmartphone,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Electronics Engineering',
     blurb: 'Design and development of electronic hardware.',
     icon: CircuitBoard,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Electronics & Controls',
     blurb: 'Control hardware engineered for series production.',
     icon: SlidersHorizontal,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Digital Engineering',
     blurb: 'Digital platforms, cloud and data-driven solutions.',
     icon: Cloud,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Functional Safety & Cybersecurity',
     blurb: 'Safety, security and compliance across the lifecycle.',
     icon: ShieldCheck,
-    href: '#quality',
+    href: '/capabilities',
   },
   {
     title: 'Verification & Testing',
     blurb: 'Comprehensive validation and testing services.',
     icon: SearchCheck,
-    href: '#quality',
+    href: '/capabilities',
   },
 ]
 
@@ -149,31 +151,31 @@ const TECHNOLOGIES: Technology[] = [
     title: 'Electrification & Powertrain',
     blurb: 'Traction hardware and energy management engineered as one system.',
     image: techElectrification,
-    href: '#capabilities',
+    href: '/technologies#electrification',
   },
   {
     title: 'Software Defined Platforms',
     blurb: 'Service-oriented architectures and over-the-air capable stacks.',
     image: techSoftwareDefined,
-    href: '#capabilities',
+    href: '/technologies#software-defined',
   },
   {
     title: 'Automation',
     blurb: 'Drives, control systems and instrumentation for continuous duty.',
     image: techAutomation,
-    href: '#capabilities',
+    href: '/technologies#automation',
   },
   {
     title: 'Mission-Critical Systems',
     blurb: 'Functional safety and cybersecurity to ISO 26262 and ISO 21434.',
     image: techMissionCritical,
-    href: '#capabilities',
+    href: '/technologies#mission-critical',
   },
   {
     title: 'AI & Digital Engineering',
     blurb: 'Simulation, analytics and digital threads across the lifecycle.',
     image: techAiDigital,
-    href: '#capabilities',
+    href: '/technologies#ai-digital',
   },
 ]
 
@@ -198,19 +200,19 @@ const INDUSTRIES: Industry[] = [
         title: 'Electrified Powertrain',
         blurb: 'Traction motors, inverters and BMS for two, three and four-wheel platforms.',
         image: programmeElectrifiedPowertrain,
-        href: '#',
+        href: '/industries/automotive',
       },
       {
         title: 'Vehicle Control Units',
         blurb: 'Body, motor and gateway ECUs built on AUTOSAR Classic.',
         image: programmeVehicleControlUnits,
-        href: '#',
+        href: '/products/vehicle-control-units',
       },
       {
         title: 'Validation & Homologation',
         blurb: 'Test benches, road correlation and release evidence.',
         image: programmeValidationHomologation,
-        href: '#',
+        href: '/quality',
       },
     ],
   },
@@ -503,13 +505,20 @@ function ProductsPanel() {
                 'basis-[80%] sm:basis-[calc((100%-1rem)/2.5)] lg:basis-[calc((100%-5rem)/4.5)]',
               )}
             >
-              <a
+              <AppLink
                 href={p.href}
                 className={cx(
                   'group flex h-full flex-col overflow-hidden rounded-[16px] transition-all duration-300 hover:-translate-y-1',
                   p.featured
                     ? `${CARD_GREEN} shadow-[0_16px_40px_rgba(0,0,0,0.28)]`
-                    : `border border-line-soft bg-white ${CARD_GREEN_HOVER} hover:border-transparent hover:shadow-[0_14px_32px_rgba(0,0,0,0.18)]`,
+                    : // White fading to pale green (30 Sep): white behind the
+                      // product for its top third, then down to #eef6ea — the
+                      // pale green this section already uses — behind the name.
+                      // A flat #eef6ea card read too green. Top-to-bottom, the
+                      // same direction as the CTA bar's gradient below. The
+                      // hover gradient replaces it (both are background-image,
+                      // and the hover variant comes later in the stylesheet).
+                      `border border-[#e0ecd9] bg-[linear-gradient(180deg,#ffffff_0%,#ffffff_35%,#eef6ea_100%)] ${CARD_GREEN_HOVER} hover:border-transparent hover:shadow-[0_14px_32px_rgba(0,0,0,0.18)]`,
                 )}
               >
                 <div className="relative flex flex-1 items-center justify-center p-5">
@@ -559,7 +568,7 @@ function ProductsPanel() {
                     }
                   />
                 </div>
-              </a>
+              </AppLink>
             </li>
           ))}
         </ul>
@@ -593,7 +602,7 @@ function ServicesPanel() {
               'basis-[86%] sm:basis-[calc((100%-1rem)/2.2)] lg:basis-[calc((100%-3.75rem)/3.5)]',
             )}
           >
-            <a
+            <AppLink
               href={s.href}
               className="group flex h-full flex-col rounded-[16px] border border-line-soft bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-line hover:shadow-[0_14px_32px_rgba(0,0,0,0.08)]"
             >
@@ -613,7 +622,7 @@ function ServicesPanel() {
                 <span className="font-body text-[14px] font-medium text-ink">Explore</span>
                 <ArrowButton direction="right" />
               </span>
-            </a>
+            </AppLink>
           </li>
         ))}
       </ul>
@@ -906,7 +915,7 @@ function TechnologiesPanel() {
                   'basis-[86%] sm:basis-[calc((100%-1rem)/1.8)] lg:basis-[calc((100%-2.5rem)/2.5)]',
                 )}
               >
-                <a
+                <AppLink
                   href={t.href}
                   className="group relative flex h-full flex-col overflow-hidden rounded-[16px] border border-line-soft bg-white transition-all duration-300 hover:-translate-y-1 hover:border-line hover:shadow-[0_14px_32px_rgba(0,0,0,0.08)]"
                 >
@@ -941,7 +950,7 @@ function TechnologiesPanel() {
                       <ArrowButton direction="right" className="!h-9 !w-9" />
                     </span>
                   </div>
-                </a>
+                </AppLink>
               </li>
             )
           })}
@@ -1049,7 +1058,7 @@ function IndustryPanel({
         <ul className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {shown.map((p, i) => (
             <li key={p.title}>
-              <a
+              <AppLink
                 href={p.href}
                 className="group flex h-full flex-col overflow-hidden rounded-[16px] border border-line-soft bg-white transition-all duration-300 hover:-translate-y-1 hover:border-line hover:shadow-[0_14px_32px_rgba(0,0,0,0.08)]"
               >
@@ -1079,7 +1088,7 @@ function IndustryPanel({
                     <ArrowButton direction="right" />
                   </span>
                 </div>
-              </a>
+              </AppLink>
             </li>
           ))}
         </ul>
@@ -1265,15 +1274,36 @@ export function SolutionsFinderHome3() {
       </div>
 
       {/* Body ----------------------------------------------------------- */}
-      <div className="shell-wide pt-4">
-        <div id={`solutions-panel-${tab.id}`} role="tabpanel">
-          {tab.id === 'product' && <ProductsPanel />}
-          {tab.id === 'service' && <ServicesPanel />}
-          {tab.id === 'technology' && <TechnologiesPanel />}
-          {tab.id === 'industry' && (
-            <IndustryPanel industryId={industryId} setIndustryId={setIndustryId} />
-          )}
+      {/* The pale mint wave artwork sits behind every tab's content as a
+          background, not a panel: full width, no border or frame, at half
+          strength, and faded out at top and bottom so it has no edge where
+          it meets the header band or the call to action. A first pass put
+          it in a bordered, rounded card; that read as a box and was taken
+          out on review (30 Sep).
+
+          It wraps the tab content rather than each panel, so switching tabs
+          keeps the same ground instead of flashing a new one in. */}
+      <div className="relative">
+        <img
+          src={solutionsPanelWaves}
+          alt=""
+          aria-hidden
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_22%,#000_72%,transparent_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_22%,#000_72%,transparent_100%)]"
+        />
+        <div className="shell-wide relative pt-4">
+          <div id={`solutions-panel-${tab.id}`} role="tabpanel">
+            {tab.id === 'product' && <ProductsPanel />}
+            {tab.id === 'service' && <ServicesPanel />}
+            {tab.id === 'technology' && <TechnologiesPanel />}
+            {tab.id === 'industry' && (
+              <IndustryPanel industryId={industryId} setIndustryId={setIndustryId} />
+            )}
+          </div>
         </div>
+      </div>
+
+      <div className="shell-wide">
 
         {/* Call to action ---------------------------------------------- */}
         <div className="mt-8 flex flex-col gap-6 rounded-[16px] border border-line-soft bg-[linear-gradient(180deg,#f8fbf6_0%,#f2f7ef_100%)] p-6 lg:mt-10 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:p-7">
@@ -1292,13 +1322,13 @@ export function SolutionsFinderHome3() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 lg:shrink-0">
-            <a
-              href="#contact"
+            <AppLink
+              href="/contact"
               className="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03]"
             >
               Explore Solutions
               <ArrowRight aria-hidden className="h-[18px] w-[18px]" />
-            </a>
+            </AppLink>
             <button
               type="button"
               onClick={() => setTabId(TABS[0].id)}

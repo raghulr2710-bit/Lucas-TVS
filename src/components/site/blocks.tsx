@@ -60,16 +60,20 @@ export function SmartLink({
   )
 }
 
-/** The 36px ringed arrow that ends most cards. */
-export function ArrowCircle({ tone = 'lime' }: { tone?: 'lime' | 'white' }) {
+/**
+ * The 36px ringed arrow that ends most cards. `lime-on-dark` keeps the
+ * lime ring but draws the arrow white, for a dark card — the ink arrow of
+ * `lime` would vanish there.
+ */
+export function ArrowCircle({ tone = 'lime' }: { tone?: 'lime' | 'white' | 'lime-on-dark' }) {
   return (
     <span
       aria-hidden
       className={cx(
         'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors duration-300',
-        tone === 'lime'
-          ? 'border-lime text-ink group-hover:bg-lime'
-          : 'border-white text-white group-hover:bg-white group-hover:text-ink',
+        tone === 'lime' && 'border-lime text-ink group-hover:bg-lime',
+        tone === 'white' && 'border-white text-white group-hover:bg-white group-hover:text-ink',
+        tone === 'lime-on-dark' && 'border-lime text-white group-hover:bg-lime group-hover:text-ink',
       )}
     >
       <IconArrowUpRight />
@@ -94,7 +98,9 @@ export function Band({
   id?: string
 }) {
   return (
-    <section id={id} className={tone === 'mute' ? 'bg-surface-mute' : undefined}>
+    // scroll-mt clears the pinned header when a band is an in-page anchor
+    // target ("#explore", "#stories"...) and the browser jumps natively.
+    <section id={id} className={cx('scroll-mt-[104px]', tone === 'mute' && 'bg-surface-mute')}>
       <div className={cx(FRAME, BAND, className)}>{children}</div>
     </section>
   )
@@ -511,13 +517,17 @@ export function ProductTile({ product }: { product: ProductTileData }) {
   )
 }
 
-/** The lime-tinted tile that closes a product grid with an onward link. */
+/**
+ * The lime-tinted tile that closes a product grid with an onward link.
+ * Full height, so it matches the product cards in its row rather than
+ * sitting short beside them.
+ */
 export function MoreTile({ label, to, href }: LinkTarget & { label: string }) {
   return (
     <SmartLink
       to={to}
       href={href}
-      className="group flex min-h-[120px] flex-col justify-between gap-4 rounded-[18px] border-[1.5px] border-[#ddebc0] bg-lime-tint p-6 text-ink"
+      className="group flex h-full min-h-[120px] flex-col justify-between gap-4 rounded-[18px] border-[1.5px] border-[#ddebc0] bg-lime-tint p-6 text-ink"
     >
       <span className="font-display text-[22px] leading-[1.25] font-semibold">{label}</span>
       <ArrowCircle />

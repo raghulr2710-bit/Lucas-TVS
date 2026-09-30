@@ -58,7 +58,7 @@ export const TECHNOLOGIES: Technology[] = [
     name: 'Mission-Critical Systems',
     blurb: 'Supporting the complete lifecycle of mission-critical platforms and subsystems.',
     image: focusGridMissionCritical,
-    imageAlt: 'Armoured vehicle, naval vessel and drone under a tactical overlay',
+    imageAlt: 'Main battle tank on a rocky shoreline, with a warship and a drone beyond',
     icon: IconShieldCheck,
     items: ['System Architecture', 'Embedded Software', 'RTOS Development', 'Rugged & Vehicle Electronics', 'Verification & Validation'],
   },

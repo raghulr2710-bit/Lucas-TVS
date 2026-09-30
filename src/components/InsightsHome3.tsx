@@ -1,16 +1,19 @@
 import { motion } from 'framer-motion'
+import { AppLink } from './AppLink'
 import { Button, ChevronPill, Eyebrow } from './primitives'
 import { insightFeature, insightTruck, insightCar } from '../lib/assets'
 
 const ARTICLES = [
   {
     title: 'Software & Product Engineering division launched',
+    href: '/insights/software-and-product-engineering-division-launched',
     blurb: 'Lucas-TVS launches its Software & Product Engineering division.',
     image: insightTruck,
     alt: 'Commercial truck on a highway at dusk',
   },
   {
     title: 'Defence modernization programs',
+    href: '/insights/defence-modernization-programs',
     blurb:
       'Supporting defence modernization & localization programs.',
     image: insightCar,
@@ -40,7 +43,9 @@ export function InsightsHome3() {
             Stay updated with the latest developments in engineering, software
             and defence technologies.
           </p>
-          <Button className="mt-6">All insights</Button>
+          <Button href="/insights" className="mt-6">
+            All insights
+          </Button>
         </div>
       </header>
 
@@ -59,6 +64,14 @@ export function InsightsHome3() {
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+          {/* The pill promised a link that was never there. This stretched
+              link makes the whole card open the story. */}
+          <AppLink
+            href="/insights/lucas-tvs-invests-in-bat-germany"
+            aria-label="Read: Lucas-TVS invests in BAT, Germany"
+            className="absolute inset-0 z-20 rounded-[15px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+          />
 
           <ChevronPill
             className="absolute top-[9px] right-[10px] !h-[52px] !w-[106px] !bg-white transition-transform duration-300 group-hover:scale-110"
@@ -107,8 +120,8 @@ export function InsightsHome3() {
                   {article.blurb}
                 </p>
 
-                <a
-                  href="#"
+                <AppLink
+                  href={article.href}
                   className="mt-auto inline-flex items-center gap-3 pt-4 font-body text-[15px] text-body lg:text-[16px]"
                 >
                   Read More
@@ -116,7 +129,7 @@ export function InsightsHome3() {
                     className="transition-transform duration-300 group-hover:translate-x-1"
                     label={`Read more: ${article.title}`}
                   />
-                </a>
+                </AppLink>
               </div>
             </motion.article>
           ))}

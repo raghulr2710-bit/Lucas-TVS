@@ -4,6 +4,7 @@ import {
   sectorIndustrial,
   sectorDefenceAerospace,
 } from '../lib/assets'
+import { ROUTES } from '../lib/routes'
 
 const INDUSTRIES = [
   {
@@ -12,6 +13,7 @@ const INDUSTRIES = [
       'Accelerating the transition to connected, electric, autonomous and software-defined mobility.',
     image: sectorAutomotive,
     alt: 'Electric SUV driving on a highway with a city skyline behind it',
+    href: ROUTES.automotive,
   },
   {
     title: 'Industrial',
@@ -19,6 +21,7 @@ const INDUSTRIES = [
       'Enabling intelligent manufacturing, automation, digitalization and connected industrial ecosystems.',
     image: sectorIndustrial,
     alt: 'Robotic arm welding on an automated factory production line',
+    href: ROUTES.industrial,
   },
   {
     title: 'Defence & Aerospace',
@@ -26,6 +29,7 @@ const INDUSTRIES = [
       'Supporting mission-critical programs through advanced engineering, embedded systems, electronics and digital technologies.',
     image: sectorDefenceAerospace,
     alt: 'Fighter jet flying past a mobile radar system at sunset',
+    href: ROUTES.defence,
   },
 ]
 
@@ -71,6 +75,11 @@ const HEADER = (
  * opt-in prop on `CircularSplitRoll` that draws the decorative dotted
  * orbit + gradient arcs + per-sector dot behind the rotating titles,
  * brightening whichever dot matches the sector currently in focus.
+ *
+ * 30 Sep: each sector card links to that sector's page — Automotive to
+ * /industries/automotive and so on — through `CircularSplitRoll`'s
+ * optional per-item `href`. Home and Home2 pass none, so theirs are
+ * unchanged.
  */
 export function IndustriesAnimatedHome3() {
   return (

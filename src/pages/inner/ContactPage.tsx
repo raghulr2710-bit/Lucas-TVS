@@ -8,13 +8,30 @@ import {
   IconPeople,
   IconPhone,
   IconPin,
-  ImageSlot,
+  BAND,
+  FRAME,
   Pill,
   StackHeader,
 } from '../../components/site/design'
-import { BODY_GAP, Band, DarkHero, FeatureCard } from '../../components/site/blocks'
+import {
+  ArrowCircle,
+  BODY_GAP,
+  Band,
+  DarkHero,
+  SmartLink,
+  type LinkTarget,
+} from '../../components/site/blocks'
 import { COMPANY, ROUTES } from '../../lib/routes'
-import { rndFeature } from '../../lib/assets'
+import { reachCareers, reachEngineering, reachMedia, rndFeature, solutionsPanelWaves } from '../../lib/assets'
+
+const ADDRESS =
+  'India Nippon Electricals Limited (INEL) R&D Tech Center, Plot No-137, Phase-1, SIPCOT Industrial Complex, Hosur, Tamil Nadu - 635126'
+
+/**
+ * Google's keyless embed, searching for the address above. No API key or
+ * account involved; the frame carries its own "View larger map" link.
+ */
+const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`
 
 const FIELD =
   'h-[50px] w-full rounded-[12px] border-[1.5px] border-line-soft bg-white px-4 font-body text-[15px] text-ink transition-colors duration-200 focus:border-green-deep focus:outline-none'
@@ -34,6 +51,12 @@ const FIELD =
  *   - The form. No recipient has been named, so submitting it posts
  *     nowhere: it validates, then says plainly that the form is not yet
  *     connected. It does not pretend to have sent anything.
+ *
+ * The map is a live Google Maps embed of the address (1 Oct), sized to end
+ * level with the form on desktop.
+ *
+ * "Other ways to reach us" follows the client's 1 Oct reference: dark
+ * green photo cards on a pale wave backdrop. See `ReachCard`.
  */
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -64,7 +87,10 @@ export default function ContactPage() {
       />
 
       <Band tone="mute" id="enquiry">
-        <div className="flex flex-col gap-7 lg:flex-row lg:items-start lg:gap-16">
+        {/* Stretched, not start-aligned, so on desktop the details column
+            runs the full height of the form and the map fills whatever the
+            address card leaves — the two columns end on the same line. */}
+        <div className="flex flex-col gap-7 lg:flex-row lg:items-stretch lg:gap-16">
           {/* Form ------------------------------------------------------ */}
           <form
             onSubmit={onSubmit}
@@ -140,8 +166,7 @@ export default function ContactPage() {
           <div className="flex min-w-0 grow flex-col gap-5">
             <dl className="flex flex-col gap-[22px] rounded-[24px] bg-lime-tint p-[22px] lg:p-8">
               <Detail icon={<IconPin />} label="Address">
-                India Nippon Electricals Limited (INEL) R&amp;D Tech Center, Plot No-137, Phase-1, SIPCOT
-                Industrial Complex, Hosur, Tamil Nadu - 635126
+                {ADDRESS}
               </Detail>
               <Detail icon={<IconPhone />} label="Phone">
                 +91 00000 00000
@@ -150,35 +175,135 @@ export default function ContactPage() {
                 info@lucastvs.co.in
               </Detail>
             </dl>
-            <ImageSlot label="Map — INEL R&D Tech Center, Hosur" className="h-[240px] w-full rounded-[24px] lg:h-[300px]" />
+            {/* Fixed height on a phone, where the columns stack; from lg
+                it grows into the rest of the column. The frame is absolutely
+                placed so it always fills the box, whatever height that is. */}
+            <div className="relative h-[300px] w-full overflow-hidden rounded-[24px] border-[1.5px] border-line-soft bg-surface-mute lg:h-auto lg:min-h-[300px] lg:flex-1">
+              <iframe
+                src={MAP_EMBED}
+                title="Map — INEL R&D Tech Center, SIPCOT Industrial Complex, Hosur"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            </div>
           </div>
         </div>
       </Band>
 
-      <Band>
-        <StackHeader eyebrow="Other ways to reach us" title="The right team," accent="first time." />
-        <div className={`${BODY_GAP} grid gap-3.5 md:grid-cols-3 lg:gap-6`}>
-          <FeatureCard
-            icon={<IconChat />}
-            title="Engineering Enquiries"
-            body="Programmes, partnerships and technical discussions."
-            link={{ label: 'Talk to Engineering', href: '#enquiry' }}
-          />
-          <FeatureCard
-            icon={<IconPeople />}
-            title="Careers"
-            body="Explore roles and life at Lucas TVS."
-            link={{ label: 'View Open Roles', href: COMPANY.careersPortal }}
-          />
-          <FeatureCard
-            icon={<IconDocument />}
-            title="Media & Events"
-            body="Press, speaking invitations and publications."
-            link={{ label: 'Latest Insights', to: ROUTES.insights }}
-          />
+      {/* Other ways to reach us ----------------------------------------
+          The same pale mint waves as the homepage's Solutions finder,
+          faded out at top and bottom so the band has no hard edge. */}
+      <section className="relative overflow-hidden">
+        <img
+          src={solutionsPanelWaves}
+          alt=""
+          aria-hidden
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_18%,#000_82%,transparent_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_18%,#000_82%,transparent_100%)]"
+        />
+        <div className={`${FRAME} ${BAND} relative`}>
+          <StackHeader eyebrow="Other ways to reach us" title="The right team," accent="first time." />
+          {/* Three across from xl. Between md and xl two across, with the
+              third card running the full width beneath — three at 1024
+              leaves each card too narrow for its copy and its photograph. */}
+          <div className={`${BODY_GAP} grid gap-4 md:grid-cols-2 lg:gap-6 xl:grid-cols-3`}>
+            <ReachCard
+              icon={<IconChat />}
+              title="Engineering Enquiries"
+              body="Programmes, partnerships and technical discussions."
+              link={{ label: 'Talk to Engineering', href: '#enquiry' }}
+              image={reachEngineering}
+            />
+            <ReachCard
+              icon={<IconPeople />}
+              title="Careers"
+              body="Explore roles and life at Lucas TVS."
+              link={{ label: 'View Open Roles', href: COMPANY.careersPortal }}
+              image={reachCareers}
+            />
+            <ReachCard
+              icon={<IconDocument />}
+              title="Media & Events"
+              body="Press, speaking invitations and publications."
+              link={{ label: 'Latest Insights', to: ROUTES.insights }}
+              image={reachMedia}
+              className="md:col-span-2 xl:col-span-1"
+            />
+          </div>
         </div>
-      </Band>
+      </section>
     </PageShell>
+  )
+}
+
+/**
+ * A "reach us" card, after the client's 1 Oct reference: deep green, the
+ * photograph on the right fading into the green, a pale lime icon tile,
+ * white type and a lime-ringed arrow.
+ *
+ * The photographs are the reference's own, cropped to the picture half of
+ * each card (src/assets/Contact). The whole card is the link — a bigger
+ * target than the label alone — and it lifts slightly on hover.
+ *
+ * The copy column is held to 250px so it never runs far into the picture,
+ * and a scrim darkens the picture's left edge wherever the two do meet.
+ */
+function ReachCard({
+  icon,
+  title,
+  body,
+  link,
+  image,
+  className = '',
+}: {
+  icon: ReactNode
+  title: string
+  body: string
+  link: LinkTarget & { label: string }
+  image: string
+  className?: string
+}) {
+  return (
+    <SmartLink
+      to={link.to}
+      href={link.href}
+      className={`group relative isolate flex min-h-[270px] flex-col overflow-hidden rounded-[20px] bg-[#062a22] shadow-[0_18px_40px_rgba(6,42,34,0.18)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_26px_54px_rgba(6,42,34,0.28)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-deep motion-reduce:transition-none motion-reduce:hover:translate-y-0 lg:min-h-[276px] ${className}`}
+    >
+      {/* The glow the reference carries into the top-left corner. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(85%_70%_at_0%_0%,rgba(23,108,77,0.55)_0%,rgba(6,42,34,0)_62%)]"
+      />
+      <img
+        src={image}
+        alt=""
+        aria-hidden
+        decoding="async"
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 h-full w-auto max-w-[62%] object-cover object-left transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none [-webkit-mask-image:linear-gradient(to_right,transparent_0%,#000_38%)] [mask-image:linear-gradient(to_right,transparent_0%,#000_38%)]"
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(6,42,34,0.9)_0%,rgba(6,42,34,0.55)_45%,rgba(6,42,34,0)_75%)]"
+      />
+
+      <div className="flex flex-1 flex-col p-6 lg:p-7">
+        <span className="grid h-14 w-14 shrink-0 place-items-center rounded-[14px] bg-[#e3f6b9] text-ink [&>svg]:h-[26px] [&>svg]:w-[26px]">
+          {icon}
+        </span>
+        <h3 className="mt-5 max-w-[250px] font-display text-[21px] leading-[1.2] font-semibold text-white lg:text-[23px]">
+          {title}
+        </h3>
+        <p className="mt-2.5 max-w-[235px] font-body text-[14px] leading-[1.55] text-white/85 lg:text-[15px]">
+          {body}
+        </p>
+        <span className="mt-auto flex items-center gap-3 pt-6 font-body text-[15px] font-medium text-white">
+          {link.label}
+          <ArrowCircle tone="lime-on-dark" />
+        </span>
+      </div>
+    </SmartLink>
   )
 }
 

@@ -1,12 +1,15 @@
-import { Users, Settings, Rocket, Lightbulb, ArrowRight, type LucideIcon } from 'lucide-react'
+import { Users, Settings, Rocket, ArrowRight, type LucideIcon } from 'lucide-react'
+import { AppLink } from './AppLink'
 import { careersScene } from '../lib/assets'
 
-/** The four reasons-to-join under the buttons, left to right. */
+/**
+ * The reasons-to-join under the buttons, left to right. There were four;
+ * "Shape a smarter tomorrow" came off on 30 Sep at the client's request.
+ */
 const HIGHLIGHTS: { icon: LucideIcon; lines: [string, string] }[] = [
   { icon: Users, lines: ['Work on', 'real-world impact'] },
   { icon: Settings, lines: ['Collaborate with', 'experts'] },
   { icon: Rocket, lines: ['Grow your', 'career'] },
-  { icon: Lightbulb, lines: ['Shape a', 'smarter tomorrow'] },
 ]
 
 /**
@@ -84,26 +87,26 @@ export function CareersHome3() {
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
-            <a
-              href="#"
+            <AppLink
+              href="https://career.lucas-tvs.com"
               className="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-body text-[15px] font-medium text-ink transition-transform duration-300 hover:scale-[1.03]"
             >
               View open roles
               <ArrowRight aria-hidden className="h-[18px] w-[18px]" />
-            </a>
-            <a
-              href="#"
+            </AppLink>
+            <AppLink
+              href="/careers#life"
               className="inline-flex items-center rounded-full border border-line bg-white px-6 py-3.5 font-body text-[15px] font-medium text-ink transition-colors duration-300 hover:border-green-deep"
             >
               Life at Lucas TVS
-            </a>
+            </AppLink>
           </div>
 
-          {/* Four across with hairlines between them, as the reference has
-              it — but only from `sm`. At 375px that row gives each item
-              about 78px, which shreds labels like "Collaborate with
-              experts", so phones get a 2x2 grid and drop the rules, which
-              have nothing left to separate.
+          {/* One row with hairlines between them, as the reference has
+              it — but only from `sm`. At 375px that row is too narrow for
+              labels like "Collaborate with experts", so phones get a
+              two-column grid and drop the rules, which have nothing left to
+              separate.
 
               The rules are an explicit border on each item bar the first,
               not `divide-x` on the row: `divide-x` applied its colour here
@@ -125,8 +128,8 @@ export function CareersHome3() {
                 {/* Each written line is held to one rendered line.
                     Without this the column decides where the text breaks:
                     "real-world impact" needs 110px and only had 99px, so
-                    three of the four ran to three lines while "Grow your
-                    career" stayed at two, and the row sat unevenly. The
+                    most ran to three lines while "Grow your career" stayed
+                    at two, and the row sat unevenly. The
                     copy column was widened to 540px to give every label
                     the width it measures, with room to spare. */}
                 <p className="mt-3 font-body text-[12px] leading-[1.35] text-ink">

@@ -30,7 +30,7 @@ export function PageShell({
   children: ReactNode
 }) {
   const contentRef = useRef<HTMLElement>(null)
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
   const lenis = useLenis()
 
   useHeadingBlurIn(contentRef, pathname)
@@ -58,17 +58,25 @@ export function PageShell({
   // A #hash — arriving at `/technologies#electrification`, or an in-page
   // link like "Explore Products" — lands on that section. Separate from the
   // reset above so an in-page jump doesn't first bounce to the top, and
-  // deferred a tick so a freshly navigated page's markup exists.
+  // deferred a tick so a freshly navigated page's markup exists. Keyed on
+  // the navigation too, so following the same #hash again — say, a second
+  // sector from the Products mega menu, /products?sector=…#explore, while
+  // already there — scrolls again rather than doing nothing.
   useEffect(() => {
     if (!hash) return
     const id = setTimeout(() => {
       const target = document.getElementById(decodeURIComponent(hash.slice(1)))
       if (!target) return
-      if (lenis) lenis.scrollTo(target, { immediate: true, offset: -24 })
-      else target.scrollIntoView()
+      // Land 104px below the top so the pinned header (12px inset + a 72px
+      // bar) doesn't cover the section. Worked out as an absolute position
+      // for both paths: on a first load Lenis may not exist yet, and the
+      // fallback used to be scrollIntoView, which ignored the offset.
+      const y = target.getBoundingClientRect().top + window.scrollY - 104
+      if (lenis) lenis.scrollTo(y, { immediate: true })
+      else window.scrollTo(0, y)
     }, 0)
     return () => clearTimeout(id)
-  }, [pathname, hash, lenis])
+  }, [pathname, hash, key, lenis])
 
   return (
     <div className="relative min-h-dvh bg-white">

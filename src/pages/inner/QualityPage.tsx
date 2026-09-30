@@ -35,13 +35,21 @@ const CERTIFICATES = Array.from({ length: 4 }, (_, i) => ({
 }))
 
 /**
+ * 30 Sep: the recognition band ("A legacy of quality excellence.") is
+ * hidden, on the client's instruction — switched off here rather than
+ * deleted, so it can come back.
+ */
+const SHOW_RECOGNITION: boolean = false
+
+/**
  * Quality & Standards, built to the Quality artboards of the 29 Sep
  * reference. Copy is the reference's.
  *
  * The recognition band names the Deming Application Prize and the Deming
  * Grand Prize, attributed to the Lucas-TVS group. The earlier wireframe
  * asked whether this division could use them; the reference now answers
- * with its own copy, so it is shown as written.
+ * with its own copy, so it is shown as written — when it is shown; see
+ * `SHOW_RECOGNITION`.
  */
 export default function QualityPage() {
   return (
@@ -132,37 +140,39 @@ export default function QualityPage() {
         </ul>
       </Band>
 
-      <Band tone="mute">
-        <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:gap-12">
-          <ImageSlot
-            src={awardsBackdrop}
-            alt="Golden trophy on a reflective surface at sunrise"
-            label="Image: award ceremony / trophy"
-            className="h-[240px] w-full rounded-[24px] lg:h-[360px] lg:w-[560px] lg:shrink-0"
-          />
-          <div className="flex flex-col gap-[18px]">
-            <Eyebrow>Recognition</Eyebrow>
-            <Heading accent="quality excellence.">A legacy of</Heading>
-            <p className="font-body text-[15px] leading-[1.65] text-body lg:text-[16px]">
-              The Lucas-TVS group has been recognised with the Deming Application Prize and the
-              Deming Grand Prize — a quality culture our engineering teams carry forward.
-            </p>
-            <ul className="flex flex-wrap gap-3">
-              {['Deming Application Prize', 'Deming Grand Prize'].map((award) => (
-                <li
-                  key={award}
-                  className="flex items-center gap-3 rounded-[16px] border-[1.5px] border-line-soft bg-white px-[18px] py-3.5"
-                >
-                  <IconTile tone="tint">
-                    <IconMedal />
-                  </IconTile>
-                  <span className="font-display text-[16px] font-semibold text-ink">{award}</span>
-                </li>
-              ))}
-            </ul>
+      {SHOW_RECOGNITION && (
+        <Band tone="mute">
+          <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:gap-12">
+            <ImageSlot
+              src={awardsBackdrop}
+              alt="Golden trophy on a reflective surface at sunrise"
+              label="Image: award ceremony / trophy"
+              className="h-[240px] w-full rounded-[24px] lg:h-[360px] lg:w-[560px] lg:shrink-0"
+            />
+            <div className="flex flex-col gap-[18px]">
+              <Eyebrow>Recognition</Eyebrow>
+              <Heading accent="quality excellence.">A legacy of</Heading>
+              <p className="font-body text-[15px] leading-[1.65] text-body lg:text-[16px]">
+                The Lucas-TVS group has been recognised with the Deming Application Prize and the
+                Deming Grand Prize — a quality culture our engineering teams carry forward.
+              </p>
+              <ul className="flex flex-wrap gap-3">
+                {['Deming Application Prize', 'Deming Grand Prize'].map((award) => (
+                  <li
+                    key={award}
+                    className="flex items-center gap-3 rounded-[16px] border-[1.5px] border-line-soft bg-white px-[18px] py-3.5"
+                  >
+                    <IconTile tone="tint">
+                      <IconMedal />
+                    </IconTile>
+                    <span className="font-display text-[16px] font-semibold text-ink">{award}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </Band>
+        </Band>
+      )}
 
       <CtaPlate />
     </PageShell>

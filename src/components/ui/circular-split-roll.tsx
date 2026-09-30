@@ -3,6 +3,7 @@
 import React, { useEffect, useId, useMemo, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AppLink } from "@/components/AppLink";
 
 function usePrefersReducedMotion() {
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
@@ -86,6 +87,39 @@ export interface CircularSplitRollItem {
   alt?: string;
   /** Skip the caption drawn over/under the image — use when the image already bakes its own title & description in. */
   hideCaption?: boolean;
+  /** Makes the card a link — a route ("/industries/automotive") or a URL. Items without one render exactly as before. */
+  href?: string;
+}
+
+/**
+ * Wraps a card in a link when its item has an `href`; otherwise returns the
+ * card untouched, so consumers that pass no links get the same markup they
+ * always did.
+ *
+ * `focusable={false}` is for the animated copy of the cards, which sits in
+ * an `aria-hidden` subtree: a link there must stay out of the tab order.
+ * Keyboard and screen-reader users reach the same pages through the grid
+ * copy below it, which is what assistive tech reads at every width.
+ */
+function CardLink({
+  href,
+  label,
+  className,
+  focusable = true,
+  children,
+}: {
+  href?: string;
+  label?: string;
+  className: string;
+  focusable?: boolean;
+  children: ReactNode;
+}) {
+  if (!href) return <>{children}</>;
+  return (
+    <AppLink href={href} aria-label={label} tabIndex={focusable ? undefined : -1} className={className}>
+      {children}
+    </AppLink>
+  );
 }
 
 interface CircularSplitRollCompProps {
@@ -244,6 +278,7 @@ function CircularSplitRollComp({
       image: item.image ?? "",
       alt: item.alt ?? item.title ?? `Item ${index + 1}`,
       hideCaption: item.hideCaption ?? false,
+      href: item.href,
     }));
   }, [items]);
 
@@ -617,6 +652,7 @@ function CircularSplitRollComp({
                   key={item.id}
                   className="circular-scroll-showcase__right-item absolute left-1/2 top-1/2 ml-[calc(var(--css-card-width,210px)*-0.5)] mt-[calc(var(--css-card-height,210px)*-0.5)] h-(--css-card-height,210px) w-(--css-card-width,210px) origin-center opacity-0 will-change-[transform,opacity]"
                 >
+                  <CardLink href={item.href} focusable={false} className="block h-full w-full">
                   <div className="group relative h-full w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_30px_60px_rgba(0,0,0,0.28),0_8px_20px_rgba(0,0,0,0.16)]">
                     <img
                       src={item.image}
@@ -660,6 +696,7 @@ function CircularSplitRollComp({
                       </div>
                     )}
                   </div>
+                  </CardLink>
                 </div>
               ))}
             </div>
@@ -682,6 +719,11 @@ function CircularSplitRollComp({
               key={item.id}
               className={`w-full ${gridCardClassName}`}
             >
+              <CardLink
+                href={item.href}
+                label={item.title}
+                className="block rounded-[18px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#238f38] max-md:rounded-[14px]"
+              >
               <div
                 className={`relative aspect-square w-full overflow-hidden rounded-[18px] bg-[#f5f2eb] shadow-[0_18px_38px_rgba(0,0,0,0.28)] max-md:rounded-[14px] ${gridImageClassName}`}
               >
@@ -707,6 +749,7 @@ function CircularSplitRollComp({
                   ) : null}
                 </>
               )}
+              </CardLink>
             </article>
           ))}
         </div>

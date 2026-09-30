@@ -1,3 +1,4 @@
+import { AppLink } from './AppLink'
 import {
   Boxes,
   Cpu,
@@ -92,7 +93,9 @@ export function EngineeringServicesHome3() {
               deployment, our engineering services span embedded systems,
               electronics, software, safety, and validation.
             </p>
-            <Button className="mt-6">Explore More</Button>
+            <Button href="/capabilities" className="mt-6">
+              Explore More
+            </Button>
           </div>
         </header>
 
@@ -152,8 +155,8 @@ export function EngineeringServicesHome3() {
             <div className="absolute inset-x-0 bottom-0 p-4 lg:p-[16px]">
               {/* Plain link, not a titled card — a 3rd "Engineering Services"
                   label here duplicated the eyebrow and heading above. */}
-              <a
-                href="#"
+              <AppLink
+                href="/capabilities"
                 className="flex items-center justify-between gap-4 rounded-full border border-white bg-black/[0.22] py-[3px] pr-[3px] pl-[37px] backdrop-blur-sm transition-colors hover:bg-black/40"
               >
                 <span className="font-sans text-[18px] text-white lg:text-[21px]">
@@ -164,7 +167,7 @@ export function EngineeringServicesHome3() {
                   iconClassName="h-[26px] w-[26px]"
                   label="Explore Engineering Services"
                 />
-              </a>
+              </AppLink>
             </div>
           </article>
         </div>

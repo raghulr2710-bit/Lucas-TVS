@@ -10,11 +10,11 @@ import { aboutEngineering } from '../lib/assets'
  * then asked for the stat strip alone to come back off. So of the three:
  *
  *   - the campus photo is gone after all, but by replacement rather than
- *     removal: `aboutEngineering` (src/assets/about-engineering-light.webp)
- *     is a supplied
- *     engineering composite — robot arm, board, edge compute, dashboards —
- *     with the same aspect and the same transparent corner notch, so the
- *     layout below is unchanged from the parent's,
+ *     removal: `aboutEngineering` (src/assets/about-engineering-sectors.webp)
+ *     is a supplied engineering composite — e-motor, control units and a
+ *     board, with automotive and defence in the background — with the same
+ *     aspect and the same transparent corner notch, so the layout below is
+ *     unchanged from the parent's,
  *   - the "Who we are" eyebrow stays (revert stands),
  *   - the stat strip is gone, which is where the review landed anyway:
  *     3 sectors / 5 focus areas / 8 service lines / ∞ concept-to-SOP had
@@ -52,11 +52,12 @@ export function WhoWeAreHome3() {
         <div className="relative overflow-hidden rounded-[15px]">
           <img
             src={aboutEngineering}
-            alt="Robotic arm, circuit board, edge compute hardware and dashboards on screen, over a connected globe and city skyline"
+            alt="Electric motor, control units and a circuit board in front of an engineering building, with a vehicle design on a display screen and a tank and aircraft in the distance"
             className="h-[380px] w-full object-cover object-bottom sm:h-[460px] lg:h-auto lg:object-fill"
           />
 
           <Button
+            href="/about"
             variant="ghost"
             className="absolute top-5 right-5 !border-white !bg-white !px-9 shadow-[0_4px_4px_0_rgba(211,211,211,0.25),inset_0_0_4px_0_rgba(0,0,0,0.25)] lg:top-[47px] lg:right-[40px]"
           >

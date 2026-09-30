@@ -8,6 +8,11 @@
 // Brand ---------------------------------------------------------------
 import logoLucasTvs from '../assets/image32.webp'
 import logoLucasTvsFooter from '../assets/image33.webp'
+// India Nippon Electricals (INEL), supplied 30 Sep as navy on a solid black
+// rectangle with no transparency. The black was lifted off (each pixel read as
+// navy ink at some opacity over black) so it can sit on the white and grey
+// cards; the mark itself is unchanged. Navy — for light backgrounds only.
+import logoInel from '../assets/Logos/inel-logo.png'
 
 // Hero ----------------------------------------------------------------
 // Poster frame shown before the clip loads, and as the static fallback
@@ -30,7 +35,12 @@ import heroSlideDefenceAerospace from '../assets/Hero/slide3.mp4'
 // Separate exports rather than repointing the three above, because Home2
 // still runs the original set and must not move.
 import heroSlideIndustrialHome3 from '../assets/Hero/h3slide2.mp4'
-import heroSlideDefenceAerospaceHome3 from '../assets/Hero/h3slide3.mp4'
+// 30 Sep: Defence replaced — armoured vehicles and troops on a harbour
+// apron at dusk, a transport aircraft overhead, warships alongside. H.264
+// 1920x1080 at 24fps like the others, 3.5 MB. It is a 4-second clip where
+// the old one ran 8, so it loops once inside the hero's 5-second slide.
+// New filename rather than overwriting h3slide3.mp4, so no stale cached copy.
+import heroSlideDefenceAerospaceHome3 from '../assets/Hero/h3-defence.mp4'
 
 // Focus areas — one backdrop per tab (Home2 only) ----------------------
 import focusElectrification from '../assets/Tabs/tab1.png'
@@ -99,7 +109,12 @@ import facilityAerial from '../assets/rectangle5.webp'
 // change. New filename rather than an overwrite of abtimg.webp: replacing
 // artwork in place leaves the old copy cached under the unchanged URL,
 // which is exactly what went wrong on the Solutions cards.
-import aboutEngineering from '../assets/about-engineering-light.webp'
+//
+// 30 Sep: replaced again — e-motor, controllers and a board in front of an
+// engineering building, with a vehicle HUD, and a tank and aircraft in the
+// distance, so all three sectors are in frame. Same 1257x716 and the same
+// 601x269 notch; new filename for the same caching reason.
+import aboutEngineering from '../assets/about-engineering-sectors.webp'
 
 // Focus-area grid — Home3's bento section under Engineering Services.
 // Artwork only: each file is the illustration cropped out of the client's
@@ -109,7 +124,10 @@ import focusGridElectrification from '../assets/FocusGrid/electrification.webp'
 import focusGridElectrification2 from '../assets/FocusGrid/electrification2.webp'
 import focusGridSoftwareDefined from '../assets/FocusGrid/software-defined.webp'
 import focusGridAutomation from '../assets/FocusGrid/automation.webp'
-import focusGridMissionCritical from '../assets/FocusGrid/mission-critical.webp'
+// 30 Sep: the all-terrain vehicle shot replaced with a supplied main battle
+// tank on a shoreline, a warship and a drone beyond. Resized from 1536 to
+// 1000 wide (the card shows ~405px); new filename so no stale cached copy.
+import focusGridMissionCritical from '../assets/FocusGrid/mission-critical-tank.webp'
 import focusGridAiDigital from '../assets/FocusGrid/ai-digital.webp'
 
 // Solutions finder — Home3's 4-tab "What are you looking for?" section.
@@ -125,6 +143,15 @@ import solutionsBgVehicle from '../assets/Solutions/bg-vehicle.webp'
 import solutionsBgServices from '../assets/Solutions/bg-engineering-stack.webp'
 import solutionsBgTechnologies from '../assets/Solutions/bg-silicon-stack.webp'
 import solutionsBgIndustry from '../assets/Solutions/bg-connected-globe.webp'
+// 30 Sep: pale mint waves behind the Solutions finder's panel, all four tabs.
+import solutionsPanelWaves from '../assets/Solutions/bg-waves.webp'
+
+// Contact — "Other ways to reach us" (1 Oct). The photograph half of each
+// card, cropped from the client's reference: the baked-in headings, copy
+// and links were left behind so the card text stays live.
+import reachEngineering from '../assets/Contact/reach-engineering.webp'
+import reachCareers from '../assets/Contact/reach-careers.webp'
+import reachMedia from '../assets/Contact/reach-media.webp'
 
 import productAcGenerator from '../assets/Solutions/Products/ac-generator.webp'
 import productIsgController from '../assets/Solutions/Products/isg-controller.webp'
@@ -155,6 +182,13 @@ import industryIndustrial from '../assets/rectangle14.webp'
 import sectorAutomotive from '../assets/1sectors.png'
 import sectorIndustrial from '../assets/2sectors.png'
 import sectorDefenceAerospace from '../assets/3sectors.png'
+
+// Header mega menu — the same three sector photographs as 800px WebP
+// thumbnails (~50 KB each, against ~2.3 MB for the PNGs above), since the
+// menu sits in the header of every page.
+import menuSectorAutomotive from '../assets/Menu/menu-sector-automotive.webp'
+import menuSectorIndustrial from '../assets/Menu/menu-sector-industrial.webp'
+import menuSectorDefenceAerospace from '../assets/Menu/menu-sector-defence-aerospace.webp'
 
 // Solution showcase (drones) ------------------------------------------
 import solutionShowcase from '../assets/background.webp'
@@ -229,6 +263,7 @@ import insightCar from '../assets/rectangle28.webp'
 export {
   logoLucasTvs,
   logoLucasTvsFooter,
+  logoInel,
   heroBackdrop,
   heroArmMotion,
   heroSlideAutomotive,
@@ -286,6 +321,10 @@ export {
   solutionsBgServices,
   solutionsBgTechnologies,
   solutionsBgIndustry,
+  solutionsPanelWaves,
+  reachEngineering,
+  reachCareers,
+  reachMedia,
   productAcGenerator,
   productIsgController,
   productIgnitionCoils,
@@ -309,6 +348,9 @@ export {
   sectorAutomotive,
   sectorIndustrial,
   sectorDefenceAerospace,
+  menuSectorAutomotive,
+  menuSectorIndustrial,
+  menuSectorDefenceAerospace,
   solutionShowcase,
   tabEv,
   tabEnvironment,

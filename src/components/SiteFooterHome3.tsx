@@ -1,3 +1,4 @@
+import { AppLink } from './AppLink'
 import { Button } from './primitives'
 import { logoLucasTvsFooter } from '../lib/assets'
 
@@ -5,28 +6,28 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   {
     heading: 'Industries',
     links: [
-      { label: 'Automotive', href: '#' },
-      { label: 'Industrial', href: '#' },
-      { label: 'Defence & Aerospace', href: '#' },
+      { label: 'Automotive', href: '/industries/automotive' },
+      { label: 'Industrial', href: '/industries/industrial' },
+      { label: 'Defence & Aerospace', href: '/industries/defence-aerospace' },
     ],
   },
   {
     heading: 'Company',
     links: [
-      { label: 'About', href: '#' },
-      { label: 'Careers', href: '#' },
-      { label: 'Contact', href: '#' },
+      { label: 'About', href: '/about' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
   {
     heading: 'Services',
     links: [
-      { label: 'Product Engineering', href: '#' },
-      { label: 'Embedded Systems', href: '#' },
-      { label: 'Electronics Engineering', href: '#' },
-      { label: 'Software Engineering', href: '#' },
-      { label: 'Functional Safety & Cybersecurity', href: '#' },
-      { label: 'Digital Engineering', href: '#' },
+      { label: 'Product Engineering', href: '/capabilities' },
+      { label: 'Embedded Systems', href: '/capabilities' },
+      { label: 'Electronics Engineering', href: '/capabilities' },
+      { label: 'Software Engineering', href: '/capabilities' },
+      { label: 'Functional Safety & Cybersecurity', href: '/capabilities' },
+      { label: 'Digital Engineering', href: '/capabilities' },
     ],
   },
   {
@@ -47,9 +48,9 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   {
     heading: 'Resources',
     links: [
-      { label: 'Insights & Events', href: '#' },
-      { label: 'Whitepapers', href: '#' },
-      { label: 'Case Studies', href: '#' },
+      { label: 'Insights & Events', href: '/insights' },
+      { label: 'Whitepapers', href: '/insights?category=Whitepapers' },
+      { label: 'Case Studies', href: '/insights?category=Case%20Studies' },
     ],
   },
 ]
@@ -97,7 +98,7 @@ export function SiteFooterHome3() {
                   right team.
                 </p>
               </div>
-              <Button className="mt-5 shrink-0 sm:mt-0">
+              <Button href="/contact" className="mt-5 shrink-0 sm:mt-0">
                 Talk to Engineering
               </Button>
             </div>
@@ -114,14 +115,12 @@ export function SiteFooterHome3() {
               <ul className="mt-6 space-y-4 lg:mt-[34px]">
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <AppLink
                       href={link.href}
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noopener noreferrer' : undefined}
                       className="font-sans text-[15px] leading-[1.23] text-body transition-colors hover:text-ink"
                     >
                       {link.label}
-                    </a>
+                    </AppLink>
                   </li>
                 ))}
               </ul>

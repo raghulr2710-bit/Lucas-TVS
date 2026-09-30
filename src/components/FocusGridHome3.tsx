@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState, type ElementType } from 'react'
 import { ArrowRight, ChevronLeft, ChevronRight, ChevronRight as Chevron } from 'lucide-react'
 import { cx } from '../lib/cx'
+import { AppLink } from './AppLink'
 import {
   focusGridElectrification,
   focusGridElectrification2,
@@ -52,7 +53,7 @@ const CARDS: FocusCard[] = [
   {
     id: 'electrification',
     title: ['Electrification &', 'Powertrain'],
-    href: '#capabilities',
+    href: '/products',
     tone: 'dark',
     featured: true,
     cta: 'View Product',
@@ -70,7 +71,7 @@ const CARDS: FocusCard[] = [
   {
     id: 'software-defined',
     title: ['Software Defined', 'Platforms'],
-    href: '#capabilities',
+    href: '/technologies#software-defined',
     tone: 'light',
     slides: [
       {
@@ -82,7 +83,7 @@ const CARDS: FocusCard[] = [
   {
     id: 'automation',
     title: ['Intelligent', 'Automation'],
-    href: '#capabilities',
+    href: '/technologies#automation',
     tone: 'light',
     slides: [
       {
@@ -94,19 +95,19 @@ const CARDS: FocusCard[] = [
   {
     id: 'mission-critical',
     title: ['Mission-Critical', 'Systems'],
-    href: '#capabilities',
+    href: '/technologies#mission-critical',
     tone: 'light',
     slides: [
       {
         image: focusGridMissionCritical,
-        alt: 'Armoured vehicle, naval ship and drone under a tactical overlay',
+        alt: 'Main battle tank on a rocky shoreline, with a warship and a drone beyond',
       },
     ],
   },
   {
     id: 'ai-digital',
     title: ['AI & Digital', 'Engineering'],
-    href: '#capabilities',
+    href: '/technologies#ai-digital',
     tone: 'light',
     slides: [
       {
@@ -147,7 +148,7 @@ function Card({ card }: { card: FocusCard }) {
     return () => clearTimeout(id)
   }, [slide, many, count])
 
-  const Wrapper: ElementType = card.featured ? 'div' : 'a'
+  const Wrapper: ElementType = card.featured ? 'div' : AppLink
 
   return (
     // The featured card is a <div>, not an <a>: it holds its own CTA link
@@ -221,13 +222,13 @@ function Card({ card }: { card: FocusCard }) {
           </h3>
 
           {card.featured && card.cta && (
-            <a
+            <AppLink
               href={card.href}
               className="mt-6 inline-flex items-center gap-2 rounded-full border border-lime px-5 py-2.5 font-body text-[14px] font-medium text-lime transition-colors duration-300 hover:bg-lime hover:text-ink lg:mt-8"
             >
               {card.cta}
               <ArrowRight aria-hidden className="h-4 w-4" />
-            </a>
+            </AppLink>
           )}
 
           {/* Rendered only with something to page through — see `slides`. */}
@@ -296,11 +297,22 @@ function Card({ card }: { card: FocusCard }) {
 export function FocusGridHome3() {
   return (
     <section id="focus-grid" className="shell-wide pt-[70px] pb-16 lg:pb-24">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-        {CARDS.map((card) => (
-          <Card key={card.id} card={card} />
-        ))}
-      </div>
+      <FocusGrid />
     </section>
+  )
+}
+
+/**
+ * The bento on its own, without the homepage's section spacing, so another
+ * page can drop the same five cards into its own band — the Industries
+ * landing does, under its "Five areas, every sector" header.
+ */
+export function FocusGrid() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+      {CARDS.map((card) => (
+        <Card key={card.id} card={card} />
+      ))}
+    </div>
   )
 }

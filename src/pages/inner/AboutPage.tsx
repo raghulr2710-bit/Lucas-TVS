@@ -28,7 +28,7 @@ import {
   Statement,
 } from '../../components/site/blocks'
 import { ROUTES } from '../../lib/routes'
-import { logoLucasTvs, rndFeature, whyFeature } from '../../lib/assets'
+import { logoInel, logoLucasTvs, rndFeature, whyFeature } from '../../lib/assets'
 
 /* ------------------------------------------------------------------
    Content — every string below is the 29 Sep reference's, verbatim.
@@ -79,6 +79,7 @@ const ECOSYSTEM: {
     body: 'Group company and home of our R&D Tech Center in Hosur, with a strong portfolio of ignition and power products.',
     link: 'INEL Products',
     href: 'https://indianippon.com/Products-Solutions',
+    logo: logoInel,
   },
   {
     name: 'Bavarian Automotive Technologies',
@@ -290,7 +291,7 @@ export default function AboutPage() {
                         src={company.logo}
                         alt={`${company.name} logo`}
                         decoding="async"
-                        className="max-h-12 w-auto"
+                        className="max-h-12 w-auto max-w-full object-contain"
                       />
                     </span>
                   ) : (

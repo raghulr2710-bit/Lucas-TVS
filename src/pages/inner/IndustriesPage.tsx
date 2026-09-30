@@ -1,16 +1,8 @@
 import { PageShell } from '../../components/site/PageShell'
 import { Pill, SplitHeader, StackHeader } from '../../components/site/design'
-import {
-  ArrowCircle,
-  BODY_GAP,
-  Band,
-  CtaPlate,
-  DarkHero,
-  SectorCard,
-  SmartLink,
-} from '../../components/site/blocks'
+import { BODY_GAP, Band, CtaPlate, DarkHero, SectorCard } from '../../components/site/blocks'
+import { FocusGrid } from '../../components/FocusGridHome3'
 import { INDUSTRIES } from '../../data/industries'
-import { TECHNOLOGIES } from '../../data/technologies'
 import { ROUTES } from '../../lib/routes'
 import { approachBackdrop } from '../../lib/assets'
 
@@ -59,7 +51,7 @@ export default function IndustriesPage() {
         </div>
       </Band>
 
-      <Band tone="mute">
+      <Band>
         <SplitHeader
           eyebrow="Technologies"
           title="Five areas,"
@@ -71,19 +63,13 @@ export default function IndustriesPage() {
             </Pill>
           }
         />
-        <ul className={`${BODY_GAP} grid gap-3.5 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4`}>
-          {TECHNOLOGIES.map((tech) => (
-            <li key={tech.id}>
-              <SmartLink
-                to={`${ROUTES.technologies}#${tech.id}`}
-                className="group flex h-full flex-col justify-between gap-6 rounded-[18px] border-[1.5px] border-line-soft bg-white p-5 transition-colors duration-300 hover:border-green-deep/50"
-              >
-                <span className="font-display text-[17px] leading-[1.25] font-semibold text-ink">{tech.name}</span>
-                <ArrowCircle />
-              </SmartLink>
-            </li>
-          ))}
-        </ul>
+        {/* The homepage's focus bento, not a row of plain tiles: the same
+            five areas with their artwork, the featured Electrification card
+            across two columns, each card linking to its own section of the
+            Technologies page. One component, so the two stay identical. */}
+        <div className={BODY_GAP}>
+          <FocusGrid />
+        </div>
       </Band>
 
       <CtaPlate />

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { PageShell } from '../../components/site/PageShell'
 import { IconArrowUpRight, ImageSlot, Pill } from '../../components/site/design'
 import { BODY_GAP, Band, ChipFilter, CtaPlate, DarkHero } from '../../components/site/blocks'
@@ -33,7 +33,13 @@ const PAGE_SIZE = 6
  * nine entries that exist today it never does on "All".
  */
 export default function InsightsPage() {
-  const [filter, setFilter] = useState<string>('All')
+  // ?category=Whitepapers opens on that filter — the footer's Whitepapers
+  // and Case Studies links use it. Anything unrecognised falls back to All.
+  const [params] = useSearchParams()
+  const requested = params.get('category') ?? 'All'
+  const [filter, setFilter] = useState<string>(
+    (INSIGHT_FILTERS as readonly string[]).includes(requested) ? requested : 'All',
+  )
   const [shown, setShown] = useState(PAGE_SIZE)
 
   const isAll = filter === 'All'

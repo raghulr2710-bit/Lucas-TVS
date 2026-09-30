@@ -276,7 +276,7 @@ export function HeroHome3() {
             </motion.div>
 
             <motion.div {...riseIn(reduceMotion, 0.2)} className="order-2 mt-6 self-start lg:mt-8">
-              <Button>Talk to Engineering</Button>
+              <Button href="/contact">Talk to Engineering</Button>
             </motion.div>
           </div>
         </div>

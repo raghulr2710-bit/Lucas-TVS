@@ -55,7 +55,7 @@ export default function TechnologiesPage() {
         />
         <div className="mt-7 flex flex-col gap-12 lg:mt-14 lg:gap-[72px]">
           {TECHNOLOGIES.map((tech, i) => (
-            <div key={tech.id} id={tech.id} className="scroll-mt-6">
+            <div key={tech.id} id={tech.id} className="scroll-mt-[104px]">
               <SolutionRow
                 flip={i % 2 === 1}
                 solution={{
