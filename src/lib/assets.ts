@@ -254,6 +254,13 @@ import careersBackdrop from '../assets/rectangle10006.webp'
 // on the left and its PEOPLE / IDEAS block on the right, both of which are
 // live markup in the component.
 import careersScene from '../assets/Careers/careers-scene.webp'
+// Careers — "Why join us" cards (1 Oct), cropped from the client's
+// reference. The arrow, icon tile and title baked into each were painted
+// out of the crop; the page draws live ones back in the same places.
+import whyImpact from '../assets/Careers/why-impact.webp'
+import whyExperts from '../assets/Careers/why-experts.webp'
+import whyCareer from '../assets/Careers/why-career.webp'
+import whyTomorrow from '../assets/Careers/why-tomorrow.webp'
 
 // Insights -------------------------------------------------------------
 import insightFeature from '../assets/rectangle23.webp'
@@ -391,6 +398,10 @@ export {
   windFarm,
   careersBackdrop,
   careersScene,
+  whyImpact,
+  whyExperts,
+  whyCareer,
+  whyTomorrow,
   insightFeature,
   insightTruck,
   insightCar,

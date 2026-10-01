@@ -1,5 +1,6 @@
 import { useId, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import type { LucideIcon } from 'lucide-react'
 import { cx } from '../../lib/cx'
 import { ROUTES } from '../../lib/routes'
 import { approachBackdrop } from '../../lib/assets'
@@ -623,8 +624,15 @@ export function DarkBand({
 /**
  * Numbered stages on dark glass — the lifecycle, the validation levels,
  * the hiring steps. Two to a row on desktop, one on a phone.
+ *
+ * A step with an `icon` shows it inside the lime ring; one without keeps
+ * the plain lime dot.
  */
-export function StepGrid({ steps }: { steps: { title: string; sub: string }[] }) {
+export function StepGrid({
+  steps,
+}: {
+  steps: { title: string; sub: string; icon?: LucideIcon }[]
+}) {
   return (
     <ol className="grid gap-3 lg:grid-cols-2">
       {steps.map((step, i) => (
@@ -634,9 +642,13 @@ export function StepGrid({ steps }: { steps: { title: string; sub: string }[] })
         >
           <span
             aria-hidden
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-lime text-lime"
           >
-            <span className="h-2 w-2 rounded-full bg-lime" />
+            {step.icon ? (
+              <step.icon strokeWidth={1.75} className="h-5 w-5" />
+            ) : (
+              <span className="h-2 w-2 rounded-full bg-lime" />
+            )}
           </span>
           <span className="flex grow flex-col gap-0.5">
             <span className="font-display text-[17px] leading-[1.25] font-semibold text-white lg:text-[19px]">

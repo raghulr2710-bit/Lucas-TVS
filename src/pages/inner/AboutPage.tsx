@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { PageShell } from '../../components/site/PageShell'
 import {
   BAND,
@@ -27,8 +29,16 @@ import {
   StatGrid,
   Statement,
 } from '../../components/site/blocks'
+import { cx } from '../../lib/cx'
 import { ROUTES } from '../../lib/routes'
-import { logoInel, logoLucasTvs, rndFeature, whyFeature } from '../../lib/assets'
+import {
+  careersScene,
+  logoInel,
+  logoLucasTvs,
+  rndFeature,
+  solutionsPanelWaves,
+  whyFeature,
+} from '../../lib/assets'
 
 /* ------------------------------------------------------------------
    Content — every string below is the 29 Sep reference's, verbatim.
@@ -47,15 +57,30 @@ const STATS = [
   { value: '6', label: 'Lifecycle stages, from concept to support' },
 ]
 
-const TIMELINE = [
+/**
+ * `image` is the photograph the heritage panel shows for that milestone.
+ * Only "Today" has one: no archive photography of 1930 or 1962 has been
+ * supplied, and a modern picture standing in for either would be a claim
+ * the page can't back. Those two render a designed plate instead (see
+ * `HeritagePlate`) — give either an `image` and it takes over.
+ *
+ * `logo` puts the Lucas TVS mark on 1962's plate: the joint venture is
+ * the year that name begins, so the mark is that milestone's one genuine
+ * artefact.
+ */
+const TIMELINE: { year: string; text: string; image?: string; imageAlt?: string; logo?: boolean }[] = [
   { year: '1930', text: 'Lucas begins operations in India as Lucas Indian Service.' },
   {
     year: '1962',
     text: 'Lucas TVS is formed as a joint venture between Lucas Plc, UK and TVS Group, India.',
+    logo: true,
   },
   {
     year: 'Today',
     text: 'A dedicated software & product-engineering division builds the next generation of intelligent products.',
+    image: careersScene,
+    imageAlt:
+      'Engineer at a holographic display working across AI simulation, electrification, embedded systems and software-defined vehicles',
   },
 ]
 
@@ -148,6 +173,222 @@ const LEADERS: { name: string; role: string; photo?: string }[] = [
  * "manufacturing floor", and the 16 Sep review ruled out all factory and
  * plant imagery. It stays a placeholder until that is resolved.
  */
+/**
+ * The heritage timeline as a stepper, after the client's 1 Oct reference:
+ * a rail of dots down the left, one milestone current at a time — green
+ * year, tinted card, haloed dot — and beneath it a green "next" button, a
+ * progress line and an "01 / 03" counter.
+ *
+ * Clicking a card makes it current; "next" steps on and wraps from Today
+ * back to 1930. The rail is green up to the current milestone and fades
+ * to grey past it.
+ *
+ * Each row is a two-column grid — rail, then card — and the rail cell is
+ * a line in, the dot, a line out, both lines growing to fill. That keeps
+ * every dot level with the middle of its own card whatever height the
+ * card's copy runs to, and the lines meet across rows because the gap
+ * between cards is the cards' own margin, not a gap in the list.
+ */
+function HeritageTimeline({
+  active,
+  setActive,
+}: {
+  active: number
+  setActive: (next: number | ((i: number) => number)) => void
+}) {
+  const count = TIMELINE.length
+  const pad = (n: number) => String(n).padStart(2, '0')
+
+  return (
+    <div className="flex flex-col gap-4">
+      <ol>
+        {TIMELINE.map((row, i) => {
+          const current = i === active
+          const done = i < active
+          return (
+            <li key={row.year} className="grid grid-cols-[16px_minmax(0,1fr)] gap-x-5">
+              <span aria-hidden className="flex flex-col items-center">
+                <span
+                  className={cx(
+                    'w-[2px] flex-1 transition-colors duration-300',
+                    i === 0 ? 'bg-transparent' : i <= active ? 'bg-green-deep' : 'bg-line',
+                  )}
+                />
+                <span
+                  className={cx(
+                    'shrink-0 rounded-full transition-all duration-300 motion-reduce:transition-none',
+                    current
+                      ? 'h-4 w-4 bg-green-deep shadow-[0_0_0_5px_rgba(35,143,56,0.16)]'
+                      : done
+                        ? 'h-3 w-3 bg-green-deep'
+                        : 'h-3 w-3 bg-[#bdbdbd]',
+                  )}
+                />
+                <span
+                  className={cx(
+                    'w-[2px] flex-1',
+                    i === count - 1
+                      ? 'bg-transparent'
+                      : done
+                        ? 'bg-green-deep'
+                        : current
+                          ? 'bg-[linear-gradient(to_bottom,var(--color-green-deep),var(--color-line))]'
+                          : 'bg-line',
+                  )}
+                />
+              </span>
+
+              <button
+                type="button"
+                onClick={() => setActive(i)}
+                aria-current={current ? 'step' : undefined}
+                className={cx(
+                  'my-[7px] flex w-full flex-col gap-1.5 rounded-[16px] border-[1.5px] px-5 py-4 text-left transition-[border-color,box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep sm:flex-row sm:items-center sm:gap-5 sm:px-6',
+                  current
+                    ? 'border-[#d3ebcb] bg-[linear-gradient(90deg,#ebf7e6_0%,#f6fbf3_100%)] shadow-[0_10px_24px_rgba(35,143,56,0.08)]'
+                    : 'cursor-pointer border-line-soft bg-white hover:border-green-deep/30',
+                )}
+              >
+                <span
+                  className={cx(
+                    'shrink-0 font-display text-[22px] leading-[1.2] font-semibold transition-colors duration-300 sm:w-[76px] lg:text-[24px]',
+                    current ? 'text-green-deep' : 'text-ink',
+                  )}
+                >
+                  {row.year}
+                </span>
+                <span aria-hidden className="hidden h-10 w-px shrink-0 bg-line sm:block" />
+                <span className="font-body text-[14px] leading-[1.55] text-body">{row.text}</span>
+              </button>
+            </li>
+          )
+        })}
+      </ol>
+
+      <div className="grid grid-cols-[16px_minmax(0,1fr)] gap-x-5">
+        <span aria-hidden />
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setActive((i) => (i + 1) % count)}
+            aria-label={active === count - 1 ? 'Back to the first milestone' : 'Next milestone'}
+            className="grid h-11 w-11 shrink-0 cursor-pointer place-items-center rounded-full bg-green-deep text-white transition-transform duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-deep motion-reduce:transition-none"
+          >
+            <ArrowRight aria-hidden className="h-[18px] w-[18px]" />
+          </button>
+          <span aria-hidden className="relative h-[2px] w-[120px] overflow-hidden rounded-full bg-line">
+            <span
+              className="absolute inset-y-0 left-0 rounded-full bg-green-deep transition-[width] duration-300 motion-reduce:transition-none"
+              style={{ width: `${((active + 1) / count) * 100}%` }}
+            />
+          </span>
+          <p aria-live="polite" className="font-body text-[14px] font-medium text-body-soft">
+            <span className="sr-only">
+              Milestone {active + 1} of {count}
+            </span>
+            <span aria-hidden>
+              <span className="text-green-deep">{pad(active + 1)}</span> / {pad(count)}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * The heritage band: copy and the timeline stepper on the left, and on the
+ * right a panel that follows whichever milestone is current — crossfading
+ * between them, the year set large in its corner.
+ */
+function HeritageSection() {
+  const [active, setActive] = useState(0)
+
+  return (
+    <section className="bg-surface-mute">
+      <div className={`${FRAME} ${BAND} flex flex-col gap-7 lg:flex-row lg:items-center lg:gap-16`}>
+        <div className="flex flex-col gap-[18px] lg:w-[560px] lg:shrink-0">
+          <Eyebrow>Our heritage</Eyebrow>
+          <Heading accent="engineering trust.">Six decades of</Heading>
+          <p className="font-body text-[15px] leading-[1.65] text-body lg:text-[16px]">
+            From automotive electricals to software-defined platforms, our story is built on
+            products that ship at scale and engineering that lasts.
+          </p>
+          <HeritageTimeline active={active} setActive={setActive} />
+        </div>
+
+        <div className="relative h-[300px] min-w-0 grow overflow-hidden rounded-[24px] bg-[#062a22] sm:h-[380px] lg:h-[560px]">
+          {TIMELINE.map((row, i) => {
+            const current = i === active
+            return (
+              <div
+                key={row.year}
+                aria-hidden={!current}
+                className={cx(
+                  'absolute inset-0 transition-opacity duration-500 motion-reduce:transition-none',
+                  current ? 'opacity-100' : 'opacity-0',
+                )}
+              >
+                {row.image ? (
+                  <img
+                    src={row.image}
+                    alt={current ? row.imageAlt : ''}
+                    decoding="async"
+                    className="h-full w-full object-cover object-[68%_center]"
+                  />
+                ) : (
+                  <HeritagePlate year={row.year} logo={row.logo} />
+                )}
+
+                {/* The year, bottom left, on a scrim so it reads over a
+                    photograph as well as on a plate. */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(4,29,23,0.85)_0%,rgba(4,29,23,0)_100%)] px-6 pt-20 pb-6 lg:px-9 lg:pb-8">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-lime/60 px-3 py-1 font-mono text-[11px] tracking-[0.12em] text-lime uppercase">
+                    {String(i + 1).padStart(2, '0')} / {String(TIMELINE.length).padStart(2, '0')}
+                  </span>
+                  <p className="mt-3 font-display text-[44px] leading-none font-semibold text-white lg:text-[64px]">
+                    {row.year}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/**
+ * The panel for a milestone with no photograph: deep green with the
+ * corner glow the site's dark cards carry, the pale wave artwork lifted
+ * into it as texture, and the year as large outlined numerals. Decorative
+ * throughout — the year is spoken by the timeline and the caption.
+ */
+function HeritagePlate({ year, logo }: { year: string; logo?: boolean }) {
+  return (
+    <div aria-hidden className="relative h-full w-full overflow-hidden bg-[radial-gradient(110%_85%_at_0%_0%,#176c4d_0%,#0a3a2c_40%,#062a22_70%,#041d17_100%)]">
+      <img
+        src={solutionsPanelWaves}
+        alt=""
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-screen"
+      />
+      <span className="absolute top-1/2 right-[-4%] -translate-y-[58%] font-display text-[150px] leading-none font-semibold tracking-[-0.04em] text-transparent [-webkit-text-stroke:1.5px_rgba(179,231,24,0.42)] sm:text-[200px] lg:text-[260px]">
+        {year}
+      </span>
+      {logo && (
+        <img
+          src={logoLucasTvs}
+          alt=""
+          decoding="async"
+          className="absolute top-6 left-6 h-9 w-auto brightness-0 invert lg:top-9 lg:left-9 lg:h-12"
+        />
+      )}
+    </div>
+  )
+}
+
 export default function AboutPage() {
   return (
     <PageShell title="About Us">
@@ -179,38 +420,7 @@ export default function AboutPage() {
       </Band>
 
       {/* Heritage --------------------------------------------------- */}
-      <section className="bg-surface-mute">
-        <div
-          className={`${FRAME} ${BAND} flex flex-col gap-7 lg:flex-row lg:items-center lg:gap-16`}
-        >
-          <div className="flex flex-col gap-[18px] lg:w-[560px] lg:shrink-0">
-            <Eyebrow>Our heritage</Eyebrow>
-            <Heading accent="engineering trust.">Six decades of</Heading>
-            <p className="font-body text-[15px] leading-[1.65] text-body lg:text-[16px]">
-              From automotive electricals to software-defined platforms, our story is built on
-              products that ship at scale and engineering that lasts.
-            </p>
-            <ol className="flex flex-col gap-[18px]">
-              {TIMELINE.map((row) => (
-                <li
-                  key={row.year}
-                  className="flex gap-5 rounded-[16px] border-[1.5px] border-line-soft bg-white px-5 py-[18px]"
-                >
-                  <span className="w-[72px] shrink-0 font-display text-[22px] leading-[1.27] font-semibold text-green-deep">
-                    {row.year}
-                  </span>
-                  <span className="font-body text-[15px] leading-[1.55] text-body">{row.text}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <ImageSlot
-            label="Image: heritage photography / manufacturing floor"
-            className="h-[260px] min-w-0 grow rounded-[24px] lg:h-[560px]"
-          />
-        </div>
-      </section>
+      <HeritageSection />
 
       {/* Vision & mission ------------------------------------------- */}
       <section className={`${FRAME} ${BAND}`}>

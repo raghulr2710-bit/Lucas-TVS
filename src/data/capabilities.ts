@@ -1,5 +1,19 @@
 import type { ComponentType } from 'react'
 import {
+  BadgeCheck,
+  CircuitBoard,
+  CodeXml,
+  Cpu,
+  Gauge,
+  Layers,
+  Lightbulb,
+  Puzzle,
+  RefreshCw,
+  Rocket,
+  ShieldCheck,
+  SquareFunction,
+} from 'lucide-react'
+import {
   IconBoard,
   IconBurst,
   IconChip,
@@ -76,14 +90,19 @@ export const SERVICE_LINES: ServiceLine[] = [
   },
 ]
 
-/** "From Concept To Lifecycle." — the six stages and their sub-lines. */
+/**
+ * "From Concept To Lifecycle." — the six stages, their sub-lines, and an
+ * icon for each, read off its sub-line: an idea, stacked system layers, the
+ * chip that embedded and electronics work lands on, a verified shield for
+ * the test levels, a launch, and the update cycle.
+ */
 export const LIFECYCLE = [
-  { title: 'Concept', sub: 'Requirements & feasibility' },
-  { title: 'Architecture', sub: 'System & software' },
-  { title: 'Development', sub: 'Embedded, electronics, software' },
-  { title: 'Validation', sub: 'MIL / SIL / HIL testing' },
-  { title: 'Deployment', sub: 'Integration & production support' },
-  { title: 'Lifecycle Support', sub: 'Updates, sustaining & obsolescence' },
+  { title: 'Concept', sub: 'Requirements & feasibility', icon: Lightbulb },
+  { title: 'Architecture', sub: 'System & software', icon: Layers },
+  { title: 'Development', sub: 'Embedded, electronics, software', icon: Cpu },
+  { title: 'Validation', sub: 'MIL / SIL / HIL testing', icon: ShieldCheck },
+  { title: 'Deployment', sub: 'Integration & production support', icon: Rocket },
+  { title: 'Lifecycle Support', sub: 'Updates, sustaining & obsolescence', icon: RefreshCw },
 ]
 
 /** "Flexible models, clear ownership." */
@@ -107,12 +126,12 @@ export const ENGAGEMENT_MODELS: { title: string; body: string; icon: ComponentTy
 
 /** "Tested at every level." — Quality & Standards. */
 export const VALIDATION_LEVELS = [
-  { title: 'Model-in-the-Loop', sub: 'Validate algorithms early' },
-  { title: 'Software-in-the-Loop', sub: 'Test code on virtual targets' },
-  { title: 'Hardware-in-the-Loop', sub: 'Real ECUs, simulated world' },
-  { title: 'Integration Testing', sub: 'Systems working together' },
-  { title: 'Performance Validation', sub: 'Proven under real load' },
-  { title: 'Compliance & Certification', sub: 'Evidence for approval' },
+  { title: 'Model-in-the-Loop', sub: 'Validate algorithms early', icon: SquareFunction },
+  { title: 'Software-in-the-Loop', sub: 'Test code on virtual targets', icon: CodeXml },
+  { title: 'Hardware-in-the-Loop', sub: 'Real ECUs, simulated world', icon: CircuitBoard },
+  { title: 'Integration Testing', sub: 'Systems working together', icon: Puzzle },
+  { title: 'Performance Validation', sub: 'Proven under real load', icon: Gauge },
+  { title: 'Compliance & Certification', sub: 'Evidence for approval', icon: BadgeCheck },
 ]
 
 /**
